@@ -17,19 +17,27 @@ const elements = {
 // 🌐 語言狀態管理
 function getInitialLang() {
   const path = window.location.pathname;
-  if (path.includes('/zh-hant')) return 'zh_hant';
-  if (path.includes('/zh-hans')) return 'zh_hans';
+  let detectedLang = 'en';
 
-  try {
-    const savedLang = localStorage.getItem('site_lang');
-    if (savedLang && ['zh_hant', 'zh_hans', 'en'].includes(savedLang)) {
-      return savedLang;
-    }
-  } catch (e) {
-    console.warn('LocalStorage access restricted:', e);
+  if (path.includes('/zh-hant')) detectedLang = 'zh_hant';
+  else if (path.includes('/zh-hans')) detectedLang = 'zh_hans';
+  else {
+    try {
+      const savedLang = localStorage.getItem('site_lang');
+      if (savedLang && ['zh_hant', 'zh_hans', 'en'].includes(savedLang)) {
+        detectedLang = savedLang;
+      }
+    } catch (e) {}
   }
 
-  return 'en';
+  // 💡 關鍵修復：如果 URL 明確指定了語系，強制更新 Cookie 與 localStorage
+  // 避免 Safari 在 fetch 子資源時帶上舊的 Cookie
+  try {
+    localStorage.setItem('site_lang', detectedLang);
+    document.cookie = `site_lang=${detectedLang}; path=/; max-age=31536000; SameSite=Lax`;
+  } catch (e) {}
+
+  return detectedLang;
 }
 
 let currentLang = getInitialLang();
@@ -164,7 +172,11 @@ async function loadAndOpenPage(page, pushHistory = true) {
 
     const filePath = `/pages/${currentLang}/${page.id}.html`;
 
-    const response = await fetch(filePath, { signal: currentFetchController.signal });
+    // 在 loadAndOpenPage 中 fetch HTML 時：
+    const response = await fetch(filePath, { 
+      signal: currentFetchController.signal,
+      headers: { 'Accept-Language': currentLang } // 明確告知伺服器當前請求語系
+    });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     
     const htmlContent = await response.text();
