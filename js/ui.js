@@ -23,7 +23,7 @@ function getInitialLang() {
   else if (path.includes('/zh-hans')) detectedLang = 'zh_hans';
   else {
     try {
-      const savedLang = localStorage.getItem('site_lang');
+      const savedLang = localStorage.getItem('site_lang_v2');
       if (savedLang && ['zh_hant', 'zh_hans', 'en'].includes(savedLang)) {
         detectedLang = savedLang;
       }
@@ -33,8 +33,8 @@ function getInitialLang() {
   // 💡 關鍵修復：如果 URL 明確指定了語系，強制更新 Cookie 與 localStorage
   // 避免 Safari 在 fetch 子資源時帶上舊的 Cookie
   try {
-    localStorage.setItem('site_lang', detectedLang);
-    document.cookie = `site_lang=${detectedLang}; path=/; max-age=31536000; SameSite=Lax`;
+    localStorage.setItem('site_lang_v2', detectedLang);
+    document.cookie = `site_lang_v2=${detectedLang}; path=/; max-age=31536000; SameSite=Lax`;
   } catch (e) {}
 
   return detectedLang;
@@ -112,7 +112,7 @@ function renderUI() {
 window.changeLanguage = function(selectedLang) {
   currentLang = selectedLang;
   try {
-    localStorage.setItem('site_lang', currentLang);
+    localStorage.setItem('site_lang_v2', currentLang);
   } catch (e) { /* ignore storage error */ }
 
   const currentPath = window.location.pathname;
