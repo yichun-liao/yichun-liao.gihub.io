@@ -33,7 +33,7 @@ const TRANSLATIONS = {
     research: '学术研究',
     cv: '个人履历',
     notes: '笔记与文章',
-    contact: '联络方式'
+    contact: '联繫方式'
   },
   // ja: {
   //   about: '自己紹介',

@@ -7,8 +7,15 @@ const windowContent = document.getElementById('window-content');
 const desktopArea = document.getElementById('desktop-area');
 const windowTitleText = document.getElementById('window-title-text');
 
-// 🌐 語言狀態管理
-let currentLang = localStorage.getItem('site_lang') || 'en';
+// 🌐 語言狀態管理：優先從 URL 判斷，其次讀取 localStorage[cite: 3]
+function getInitialLang() {
+  const path = window.location.pathname;
+  if (path.includes('/zh-hant')) return 'zh_hant';
+  if (path.includes('/zh-hans')) return 'zh_hans';
+  return localStorage.getItem('site_lang') || 'en';
+}
+
+let currentLang = getInitialLang();
 let activePageId = null;
 
 // 渲染桌面圓形按鈕
@@ -16,23 +23,32 @@ function renderUI() {
   floatingContainer.innerHTML = '';
 
   PAGES.forEach((page) => {
-    const btn = document.createElement('div');
+    // 1. 改成建立 <a> 標籤
+    const btn = document.createElement('a');
+    
+    // 2. 加上標準 href 屬性（Google 爬蟲看得懂這個網址！）
+    btn.href = `/pages/${currentLang}/${page.id}.html`;
+    
     const isCenter = page.id === 'about';
     btn.className = `circle-btn ${isCenter ? 'center-btn label-bottom' : 'label-right'}`;
     btn.dataset.id = page.id;
 
-    // 🌟 從 TRANSLATIONS 字典查表取得標籤（若找不到預設退回英文）
     const pageLabel = TRANSLATIONS[currentLang]?.[page.id] || TRANSLATIONS['en'][page.id];
 
     btn.innerHTML = `
       <div class="icon">${page.icon}</div>
       <span class="label">${pageLabel}</span>
     `;
-    btn.onclick = () => loadAndOpenPage(page);
+
+    // 3. 人類點擊時，阻止預設跳頁，改開你的 3D/Mac OS 彈窗！
+    btn.onclick = (e) => {
+      e.preventDefault(); // 阻止直接轉址
+      loadAndOpenPage(page);
+    };
+
     floatingContainer.appendChild(btn);
   });
 
-  // 同步下拉選單當前選中的選項
   const langSelect = document.getElementById('lang-select');
   if (langSelect) langSelect.value = currentLang;
 }
@@ -41,19 +57,42 @@ function renderUI() {
 window.changeLanguage = function(selectedLang) {
   currentLang = selectedLang;
   localStorage.setItem('site_lang', currentLang);
-  
+
+  const currentPath = window.location.pathname;
+  const currentSearch = window.location.search; // 🎯 1. 抓取當前網址後面的 ?page=xxx 參數
+
+  // 判斷目前是否在首頁（包含 / , /index.html , /zh-hant/ , /zh-hans/）
+  const isHomePage = currentPath === '/' || 
+                     currentPath === '/index.html' || 
+                     currentPath.includes('/zh-hant') || 
+                     currentPath.includes('/zh-hans');
+
+  // 如果在首頁切換語言，直接做網址跳轉，並帶上原本的 ?page=xxx 參數
+  if (isHomePage) {
+    if (selectedLang === 'zh_hant' && !currentPath.includes('/zh-hant')) {
+      window.location.href = `/zh-hant/${currentSearch}`; // 🎯 帶上參數
+      return;
+    } else if (selectedLang === 'zh_hans' && !currentPath.includes('/zh-hans')) {
+      window.location.href = `/zh-hans/${currentSearch}`; // 🎯 帶上參數
+      return;
+    } else if (selectedLang === 'en' && (currentPath.includes('/zh-hant') || currentPath.includes('/zh-hans'))) {
+      window.location.href = `/${currentSearch}`; // 🎯 帶上參數
+      return;
+    }
+  }
+
   // 1. 重新渲染桌面按鈕標籤
   renderUI();
 
-  // 2. 若目前有開啟中的視窗，立即重新加載新語言的 HTML 檔案
+  // 2. 若目前有開啟中的視窗，立即重新加載新語言的 HTML 檔案（不新增 history 紀錄）
   if (activePageId) {
     const currentPage = PAGES.find(p => p.id === activePageId);
-    if (currentPage) loadAndOpenPage(currentPage);
+    if (currentPage) loadAndOpenPage(currentPage, false);
   }
 };
 
 // 非同步加載與開啟頁面
-async function loadAndOpenPage(page) {
+async function loadAndOpenPage(page, pushHistory = true) {
   try {
     activePageId = page.id;
     const pageLabel = TRANSLATIONS[currentLang]?.[page.id] || TRANSLATIONS['en'][page.id];
@@ -64,8 +103,8 @@ async function loadAndOpenPage(page) {
     windowContent.classList.add('active');
     floatingContainer.classList.add('is-hidden');
 
-    // 動態抓取對應語言資料夾的 HTML（例：pages/zh/about.html）
-    const filePath = `pages/${currentLang}/${page.id}.html`;
+    // ✅ 動態抓取對應語言資料夾的 HTML（加斜線 / 確保從根目錄抓取）
+    const filePath = `/pages/${currentLang}/${page.id}.html`;
 
     const response = await fetch(filePath);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,7 +112,7 @@ async function loadAndOpenPage(page) {
     const htmlContent = await response.text();
     pagesContainer.innerHTML = htmlContent;
 
-    // 重新執行加載頁面內的 script
+    // 重新執行加載頁面內的 script[cite: 3]
     const scripts = pagesContainer.querySelectorAll('script');
     scripts.forEach(oldScript => {
       const newScript = document.createElement('script');
@@ -82,12 +121,17 @@ async function loadAndOpenPage(page) {
       oldScript.parentNode.replaceChild(newScript, oldScript);
     });
 
+    if (pushHistory) {
+      const currentPath = window.location.pathname; 
+      history.pushState({ pageId: page.id }, '', `${currentPath}?page=${page.id}`);
+    }
+
   } catch (error) {
     console.error('Error loading page:', error);
     pagesContainer.innerHTML = `
       <h2 class="page-title">Error Loading Page</h2>
       <div class="page-body">
-        <p>Could not fetch file: <code>pages/${currentLang}/${page.id}.html</code>.</p>
+        <p>Could not fetch file: <code>/pages/${currentLang}/${page.id}.html</code>.</p>
         <p>Please check if the file exists in the directory.</p>
       </div>
     `;
@@ -95,11 +139,16 @@ async function loadAndOpenPage(page) {
 }
 
 // 返回主桌面
-function goHome() {
+function goHome(pushHistory = true) {
   activePageId = null;
   windowContent.classList.remove('active');
   pagesContainer.innerHTML = '';
   floatingContainer.classList.remove('is-hidden');
+
+  if (pushHistory && window.location.search) {
+    const currentPath = window.location.pathname;
+    history.pushState({}, '', currentPath);
+  }
 }
 
 /* 浮動按鈕動畫邏輯 */
@@ -170,3 +219,25 @@ setInterval(() => {
   const now = new Date();
   document.getElementById('clock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }, 1000);
+
+// 🎯 1. 監聽瀏覽器的「上一頁 / 下一頁」按鈕
+window.addEventListener('popstate', (event) => {
+  const pageId = event.state?.pageId;
+  if (pageId) {
+    const targetPage = PAGES.find(p => p.id === pageId);
+    if (targetPage) loadAndOpenPage(targetPage, false);
+  } else {
+    goHome(false);
+  }
+});
+
+// 🎯 2. 初始化時檢查 URL 是否帶有 ?page=xxx 參數（讓 Google 爬蟲或直接輸入網址的人能直接開啟視窗）
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialPageId = urlParams.get('page');
+
+  if (initialPageId) {
+    const targetPage = PAGES.find(p => p.id === initialPageId);
+    if (targetPage) loadAndOpenPage(targetPage, false);
+  }
+});

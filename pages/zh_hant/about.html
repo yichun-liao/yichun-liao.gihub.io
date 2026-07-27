@@ -1,52 +1,88 @@
-<!-- pages/about_tw.html -->
-<div class="page-container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+<!-- pages/zh_hant/about.html -->
+<h2 class="page-title">關於我 // 個人簡介</h2>
+<!-- Personal Header Card -->
+<div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+  <img src="/pictures/me.jpeg" alt="個人頭像" style="width: 110px; height: 110px; object-fit: cover; border: 2px solid #000; border-radius: 50%;">
+  <div>
+    <strong style="font-size: 1.2rem; display: block;">YiChun Liao</strong>
+    <span style="font-size: 0.85rem; color: #444; font-weight: bold;">CU Boulder 電機電腦工程（ECE）博士生</span>
+    <p style="font-size: 0.9rem; margin-top: 6px; color: #333;">
+    系統識別 • 數據驅動安全性關鍵控制
+    </p>
+  </div>
+</div>
+<div class="page-body">
   
-  <h2 class="page-title" style="font-size: 1.75rem; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 6px; text-transform: uppercase;">
-    關於我 // About Me
-  </h2>
+  <!-- 1. Executive Summary -->
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">個人簡歷</h3>
+    <p style="margin-bottom: 12px; line-height: 1.7;">
+      歡迎來到我的數位工作空間。我是美國科羅拉多大學博爾德分校（CU Boulder）電機電腦工程系（ECE）的博士生，主要研究領域為<strong>數據驅動之安全性關鍵控制（Data-Driven Safety-Critical Control）與統計系統識別（Statistical System Identification）</strong>。我的核心研究聚焦於數據驅動控制，並曾參與狀態估計與卡爾曼濾波（Kalman Filtering）相關專案。此外，我也對<strong>量化系統化交易（Quantitative Systematic Trading）</strong>抱有濃厚興趣，具備設計演算法價值投資策略與歷史回測框架的實務經驗。
+    </p>
+  </div>
 
-  <div class="page-body">
+  <!-- 2. Technical Focus & Specialization -->
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">專業技術與研究焦點</h3>
+    <p style="margin-bottom: 12px;">
+      我的主要核心技術強項與研究領域涵蓋以下專長主題：
+    </p>
+    <ul style="padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
+      <li><strong>系統識別與控制（System Identification & Control）：</strong>從經驗輸入輸出數據中建立系統數學模型，並應用最佳控制演算法進行系統控制。</li>
+      <li><strong>狀態估計與感測器融合（State Estimation & Sensor Fusion）：</strong>推導基於四元數（Quaternion）的系統模型與更新矩陣（雅可比矩陣 Jacobians），實現用於精準 IMU 姿態追蹤的擴展卡爾曼濾波器（EKF）。</li>
+      <li><strong>控制理論與動態模擬（Control Theory & Dynamic Simulation）：</strong>開發強健的回授控制迴路，並使用 MATLAB Simulink 與 Simscape 進行實體物理系統模擬。</li>
+      <li><strong>量化價值投資策略（Quantitative Value Investing Strategies）：</strong>基於財務基本面指標與多階段系統化獲利了結邏輯，設計系統化、基於規則的演算法篩選模型。</li>
+      <li><strong>回測與金融數據分析（Backtesting & Financial Data Analytics）：</strong>建構嚴謹的資料庫測試環境，驗證交易演算法在歷史極端情境下的強健效能。</li>
+    </ul>
+  </div>
+
+ <!-- 3. Technical Approach -->
+<div style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">研究與技術方法</h3>
+  
+  <blockquote style="border-left: 4px solid #000; padding: 10px 14px; margin: 16px 0; background: #f4f0e6; font-style: italic;">
+    "數據提供模型，但分析結構提供安全保證。"
+  </blockquote>
+
+  <p style="margin-bottom: 12px; line-height: 1.7;">
+    真實世界的動態系統極少符合教科書的理想假設——感測器數據帶有雜訊、系統動態會發生轉移，而金融時間序列則呈現重尾風險（Heavy Tail Risks）。
+  </p>
+  <p style="margin-bottom: 12px; line-height: 1.7;">
+    我的研究方法致力於結合統計學習與嚴謹的動態安全保證：推導狀態估計的解析更新矩陣、構建用於安全性的數據驅動控制屏障函數（Control Barrier Functions, CBFs），並在實際部署前對演算法進行極端情境（Edge Cases）的壓力測試。
+  </p>
+</div>
+
+  <!-- 4. Research & Projects -->
+<div style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">研究與專案</h3>
+  
+  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
     
-    <!-- Status Badge -->
-    <div style="margin-bottom: 20px;">
-      <span style="display: inline-block; background: #000; color: #fff; font-weight: bold; font-size: 0.8rem; padding: 4px 10px; text-transform: uppercase; letter-spacing: 1px;">
-        PROFILE // 頁面整備中
-      </span>
+    <!-- Primary Academic Research -->
+    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <strong style="font-size: 1.05rem;">數據驅動安全性與系統識別</strong>
+        <span style="font-size: 0.75rem; background: #000; color: #fff; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">ECE 博士研究</span>
+      </div>
+      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">安全性關鍵控制與控制器安全過濾器</span>
+      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
+        開發數據驅動控制屏障函數（CBFs）與安全過濾框架，以在線性系統中落實嚴謹的安全保證。結合統計系統識別與控制器合成技術，有效應對未建模系統。
+      </p>
     </div>
 
-    <!-- Main Card Section -->
-    <div style="border: 2px solid #000; padding: 24px; background: #fafafa; box-shadow: 4px 4px 0px #000; margin-bottom: 24px;">
-      <h3 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 6px;">
-        繁體中文版內容即將推出
-      </h3>
-      
-      <p style="font-size: 0.98rem; line-height: 1.7; color: #222; margin-bottom: 20px;">
-        歡迎造訪我的個人網站。中文版的個人經歷與學術背景目前正在配合最新研究進度進行整理，論文發表後將同步公開最新經歷。
+    <!-- Side Project -->
+    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <strong style="font-size: 1.05rem;">量化系統化交易</strong>
+        <span style="font-size: 0.75rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">個人專案</span>
+      </div>
+      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">演算法系統設計與基本面篩選</span>
+      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
+        設計基於規則的系統化價值投資機器人。探索基本面財務指標過濾器、多階段執行規則，以及自動化歷史回測邏輯。
       </p>
-
-      <!-- Status Inner Box -->
-      <div style="border: 2px solid #000; background: #fff; padding: 14px; margin-bottom: 20px; box-shadow: 3px 3px 0px #000;">
-        <div style="font-weight: bold; font-size: 0.8rem; color: #555; text-transform: uppercase; margin-bottom: 4px;">
-          當前進度 Status
-        </div>
-        <div style="font-size: 0.95rem; font-weight: bold; color: #000;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 2 0 0 0 2 2h12a2 2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> 論文審查中 & 經歷資料更新中
-        </div>
-      </div>
-
-      <!-- Disabled "Coming Soon" Button (Matching user signature style) -->
-      <div>
-        <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: bold; font-size: 0.85rem; color: #666; background: #e5e5e5; padding: 10px 18px; border: 2px solid #888; box-shadow: 3px 3px 0px #888; cursor: not-allowed; opacity: 0.8;" title="英文版已開放在主頁，中文版將於論文發表後更新">
-          <!-- Lock Icon -->
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          中文內容準備中 (Coming Soon)
-        </span>
-      </div>
-
     </div>
 
   </div>
+</div>
+
 </div>
