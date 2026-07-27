@@ -35,47 +35,44 @@
   </blockquote>
 
   <p style="margin-bottom: 12px; line-height: 1.7;">
-    Real-world dynamic systems rarely match textbook assumptions—IMU sensor data carries noise, system dynamics shift, and financial time-series exhibit heavy tail risks. 
+    Real-world dynamic systems rarely match textbook assumptions— sensor data carries noise, system dynamics shift, and financial time-series exhibit heavy tail risks. 
   </p>
   <p style="margin-bottom: 12px; line-height: 1.7;">
     My approach focuses on bridging statistical learning with formal dynamic guarantees: deriving analytical update matrices for state estimation, constructing data-driven Control Barrier Functions (CBFs) for safety, and stress-testing algorithms against edge cases before implementation.
   </p>
 </div>
 
-  <!-- 4. Research & Projects Timeline -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Key Focus Areas & Milestones</h3>
+  <!-- 4. Research & Projects -->
+<div style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Research & Projects</h3>
+  
+  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
     
-    <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 12px;">
-      
-      <div style="border: 2px solid #000; padding: 14px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-        <strong style="display: block; font-size: 1.05rem;">Graduate Research & Academic Systems</strong>
-        <span style="font-size: 0.85rem; color: #555;">Data Filtering & Control Engineering</span>
-        <p style="font-size: 0.95rem; margin-top: 8px; line-height: 1.5;">
-          Focusing on system modeling, dynamic signal estimation, and filtering frameworks. Preparing academic publications detailing data-driven dynamic identification techniques.
-        </p>
+    <!-- Primary Academic Research -->
+    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <strong style="font-size: 1.05rem;">Data-Driven Safety & System Identification</strong>
+        <span style="font-size: 0.75rem; background: #000; color: #fff; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">ECE PhD Research</span>
       </div>
-
-      <div style="border: 2px solid #000; padding: 14px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-        <strong style="display: block; font-size: 1.05rem;">Quantitative Systematic Trading Engine</strong>
-        <span style="font-size: 0.85rem; color: #555;">Financial Engineering & Algorithmic Design</span>
-        <p style="font-size: 0.95rem; margin-top: 8px; line-height: 1.5;">
-          Collaboratively developing automated value-investing bots and execution frameworks utilizing fundamental metric filters and disciplined multi-stage rebalancing logic.
-        </p>
-      </div>
-
+      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">Safety-Critical Control & Controller Safety Filters</span>
+      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
+        Developing data-driven Control Barrier Functions (CBFs) and safety filtering frameworks to enforce formal safety guarantees in dynamic systems. Combining statistical system identification with controller synthesis to handle unmodeled or uncertain dynamic systems.
+      </p>
     </div>
-  </div>
 
-  <!-- 5. Extended Scroll Test Paragraphs -->
-  <div style="margin-bottom: 20px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Extended Scroll & Typography Test</h3>
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      When computing state estimation matrices on embedded real-time systems, numerical precision becomes critical. Standard covariance update equations may lose positive-definiteness under single-precision floating-point arithmetic. Implementing Square-Root Information Filtering (SRIF) or Joseph-form covariance updates guarantees matrix symmetry and prevents divergence during continuous operation.
-    </p>
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      Similarly, in financial quantitative modeling, overfitting is a primary risk factor. Backtests optimized excessively on historical paths often overfit to localized noise. Applying combinatorial walk-forward analysis, realistic slippage modeling, and rigorous cross-validation ensures that systematic algorithms maintain robustness under shifting market regimes.
-    </p>
+    <!-- Side Project -->
+    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <strong style="font-size: 1.05rem;">Quantitative Systematic Trading</strong>
+        <span style="font-size: 0.75rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">Side Project</span>
+      </div>
+      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">Algorithmic System Design & Fundamental Screening</span>
+      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
+        Designing rule-based systematic value-investing bots. Exploring fundamental financial metric filters, multi-stage execution rules, and automated historical backtesting logic.
+      </p>
+    </div>
+
   </div>
+</div>
 
 </div>
