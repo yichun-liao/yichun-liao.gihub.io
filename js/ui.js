@@ -14,30 +14,15 @@ const elements = {
   get windowTitleText() { return getEl('window-title-text'); }
 };
 
-// 🌐 語言狀態管理
+// 🌐 語言狀態管理：100% 依據 URL 路徑，網址沒有語系就預設為英文 'en'
 function getInitialLang() {
   const path = window.location.pathname;
-  let detectedLang = 'en';
+  
+  if (path.includes('/zh-hant')) return 'zh_hant';
+  if (path.includes('/zh-hans')) return 'zh_hans';
 
-  if (path.includes('/zh-hant')) detectedLang = 'zh_hant';
-  else if (path.includes('/zh-hans')) detectedLang = 'zh_hans';
-  else {
-    try {
-      const savedLang = localStorage.getItem('site_lang_v2');
-      if (savedLang && ['zh_hant', 'zh_hans', 'en'].includes(savedLang)) {
-        detectedLang = savedLang;
-      }
-    } catch (e) {}
-  }
-
-  // 💡 關鍵修復：如果 URL 明確指定了語系，強制更新 Cookie 與 localStorage
-  // 避免 Safari 在 fetch 子資源時帶上舊的 Cookie
-  try {
-    localStorage.setItem('site_lang_v2', detectedLang);
-    document.cookie = `site_lang_v2=${detectedLang}; path=/; max-age=31536000; SameSite=Lax`;
-  } catch (e) {}
-
-  return detectedLang;
+  // 只要網址是根目錄 yichunliao.com/，無條件回傳 'en'
+  return 'en';
 }
 
 let currentLang = getInitialLang();
