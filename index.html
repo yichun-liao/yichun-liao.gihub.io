@@ -5,8 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 1. Google title and description (SEO) -->
-  <title>Yi-Chun Liao | Personal Website</title>
-  <meta name="description" content="Welcome to Yi-Chun Liao's personal website. Explore my background, projects, research, and experience.">
+  <!-- 💡 在 Title 與 Description 自然補上 YiChunLiao -->
+  <title>Yi-Chun Liao (YiChunLiao) | Personal Website</title>
+  <meta name="description" content="Welcome to YiChunLiao's personal website. Explore my background, projects, research, and experience.">
+
+  <!-- 2. Schema.org 結構化資料 (明確告知 Google 爬蟲所有字詞與別名關聯) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yi-Chun Liao",
+    "alternateName": ["YiChunLiao", "Yi Chun Liao", "Yichun Liao", "yichun-liao", "yichunliao" ],
+    "url": "https://yichunliao.com/",
+    "image": "https://yichunliao.com/pictures/me.jpeg",
+    "jobTitle": "Data Analyst & Systems PhD Student",
+    "sameAs": [
+      "https://github.com/yichun-liao",
+      "https://www.linkedin.com/in/yichun-liao"
+    ]
+  }
+  </script>
 
   <!--hreflang -->
   <link rel="canonical" href="https://yichunliao.com/" />
@@ -18,8 +36,8 @@
   <!-- 3. Open Graph Meta Tags -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yichunliao.com/">
-  <meta property="og:title" content="Yi-Chun Liao | Personal Portfolio">
-  <meta property="og:description" content="Welcome to Yi-Chun Liao's personal website. Explore my background, projects, research, and experience.">
+  <meta property="og:title" content="Yi-Chun Liao (YiChunLiao) | Personal Portfolio">
+  <meta property="og:description" content="Welcome to YiChunLiao's (Yi-Chun Liao) personal website. Explore my background, projects, research, and experience.">
   <meta property="og:image" content="https://yichunliao.com/pictures/me.jpeg">
 
   <!-- External Libraries -->

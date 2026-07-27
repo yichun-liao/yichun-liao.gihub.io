@@ -5,8 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 1. Google title and description (SEO) -->
-  <title>廖翊鈞 | 個人網站 - Yi-Chun Liao</title>
-  <meta name="description" content="歡迎來到廖翊鈞的個人網站。探索我的背景、專案作品、專業經歷與研究。">
+  <!-- 💡 標題與描述自然融入中文名與英文無空格字串 YiChunLiao -->
+  <title>廖翊鈞 (YiChunLiao) | 個人網站 - Yi-Chun Liao</title>
+  <meta name="description" content="歡迎來到廖翊鈞 (YiChunLiao / Yi-Chun Liao) 的個人網站。探索我的背景、專案作品、專業經歷與研究。">
+
+  <!-- 2. Schema.org 結構化資料 (連結中文名與英文別名、GitHub/LinkedIn 身份) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "廖翊鈞",
+    "alternateName": ["Yi-Chun Liao", "YiChunLiao", "Yi Chun Liao", "Yichun Liao", "yichun-liao", "yichunliao" ],
+    "url": "https://yichunliao.com/zh-hant/",
+    "image": "https://yichunliao.com/pictures/me.jpeg",
+    "jobTitle": "Data Analyst & Systems PhD Student",
+    "sameAs": [
+      "https://github.com/yichun-liao",
+      "https://www.linkedin.com/in/yichun-liao"
+    ]
+  }
+  </script>
 
   <!--hreflang -->
   <link rel="canonical" href="https://yichunliao.com/zh-hant/" />
@@ -15,11 +33,11 @@
   <link rel="alternate" hreflang="zh-Hans" href="https://yichunliao.com/zh-hans/" />
   <link rel="alternate" hreflang="x-default" href="https://yichunliao.com/" />
 
-  <!-- 3. Open Graph Meta Tags -->
+  <!-- 3. Open Graph Meta Tags (社群分享預覽) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yichunliao.com/zh-hant/">
-  <meta property="og:title" content="廖翊鈞 | 個人網站 - Yi-Chun Liao">
-  <meta property="og:description" content="歡迎來到廖翊鈞的個人網站。探索我的背景、專案作品、專業經歷與研究。">
+  <meta property="og:title" content="廖翊鈞 (YiChunLiao) | 個人網站 - Yi-Chun Liao">
+  <meta property="og:description" content="歡迎來到廖翊鈞 (YiChunLiao / Yi-Chun Liao) 的個人網站。探索我的背景、專案作品、專業經歷與研究。">
   <meta property="og:image" content="https://yichunliao.com/pictures/me.jpeg">
 
   <!-- External Libraries -->
