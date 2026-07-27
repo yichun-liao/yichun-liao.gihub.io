@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Macintosh Fullscreen CRT Portfolio</title>
+  
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- WebGL 3D Canvas Container -->
+  <div id="webgl-container"></div>
+
+  <!-- Fullscreen Macintosh Operating System Viewport -->
+  <div id="mac-os">
+    <div class="crt-overlay"></div>
+
+    <!-- menu-bar -->
+    <div class="menu-bar">
+      <div class="menu-left">
+        <span class="menu-item" id="menu-home" style="font-weight: bold;">Home</span>
+        <span class="menu-item" id="menu-cv">CV</span>
+        <span class="menu-item" id="menu-contact">Contact</span>
+      </div>
+      <div class="menu-right">
+        <!-- selection -->
+        <select id="lang-select" class="retro-select" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="zh_hant">繁體中文</option>
+          <option value="zh_hans">简体中文</option> <!-- 未來新增語言只需加在這裡 -->
+        </select>
+        <span id="clock">12:00 PM</span>
+      </div>
+    </div>
+
+    <!-- Main Desktop Area -->
+    <div class="desktop" id="desktop-area">
+      <!-- Dynamic Floating Circular Buttons Container -->
+      <div class="floating-container" id="floating-buttons-container"></div>
+
+      <!-- Content Display Modal Window -->
+      <div class="window-content" id="window-content">
+        <div class="window-header">
+          <span style="font-family: 'VT323', monospace; font-size: 1.2rem;" id="window-title-text">PORTFOLIO_VIEWER.EXE</span>
+          <button class="window-close-btn" id="close-window-btn">CLOSE [X]</button>
+        </div>
+        <!-- Loaded Dynamic HTML Content Injector -->
+        <div id="pages-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>

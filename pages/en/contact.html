@@ -1,0 +1,243 @@
+<!-- pages/contact.html -->
+<style>
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* 1984 Mac Desk Accessory Card */
+  .contact-card {
+    border: 3px solid #000;
+    background: #ffffff;
+    box-shadow: 6px 6px 0px #000;
+    padding: 24px;
+    position: relative;
+  }
+
+  .card-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+  }
+
+  .badge-status {
+    background: #000;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 1rem;
+  }
+
+  .contact-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #666;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  /* 1-Bit Retro Pixel Icon Style (Base64 Safe Mode) */
+  .retro-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    image-rendering: pixelated; /* 確保 1-bit 點陣點對點清晰 */
+    image-rendering: crisp-edges;
+    pointer-events: none;
+  }
+
+  /* 當按鈕 Hover 或為 Primary 時，自動將黑色點陣圖標反白成白色 */
+  .btn-retro.primary .retro-icon,
+  .btn-retro:hover .retro-icon {
+    filter: invert(1);
+  }
+
+  /* Email Box Area */
+  .email-box {
+    border: 2px solid #000;
+    background: #f4f0e6;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .email-address {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-retro {
+    background: #ffffff;
+    border: 2px solid #000;
+    padding: 6px 14px;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #000;
+    text-decoration: none;
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.1s ease;
+  }
+
+  .btn-retro:hover {
+    background: #000;
+    color: #fff;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  .btn-retro.primary {
+    background: #000;
+    color: #fff;
+  }
+
+  .btn-retro.primary:hover {
+    background: #333;
+  }
+
+  /* Social Links Grid */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  /* Location Info Footer */
+  .location-info {
+    border-top: 2px dashed #000;
+    padding-top: 14px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+
+<h2 class="page-title">Contact // Desk Accessory</h2>
+
+<div class="contact-container">
+
+  <!-- Main Business Card Container -->
+  <div class="contact-card">
+    
+    <div class="card-header-bar">
+      <span>DA_COMMUNICATOR.APP // v1.0</span>
+      <span class="badge-status">OPEN FOR COLLABORATION</span>
+    </div>
+
+    <!-- Primary Contact -->
+    <div class="contact-section-title">PRIMARY CONTACT (EMAIL)</div>
+    <div class="email-box">
+      <span class="email-address" id="user-email-text">contact@yichunliao.com</span>
+      
+      <div class="btn-group">
+        <!-- Clipboard copy -->
+        <button class="btn-retro primary" id="copy-email-btn" onclick="copyEmailToClipboard()">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDFoNnYyaDF2MTJINFYzaDFWMXptMSAydjFoNFYzSDZ6bS0xIDJoNnY4SDVWNXoiLz48L3N2Zz4=" class="retro-icon" alt="" />
+          COPY EMAIL
+        </button>
+
+        <!-- Mail app -->
+        <a href="mailto:yichun.chen@example.com" class="btn-retro" title="Open in local mail client">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xIDNoMTR2MTBIMVYzem0yIDJ2MWw1IDMgNS0zVjVIM3ptMCAyLjV2My41aDEwVjcuNUw4IDEwLjUgMyA3LjV6Ii8+PC9zdmc+" class="retro-icon" alt="" />
+          MAIL APP
+        </a>
+      </div>
+    </div>
+
+    <!-- Profiles & Networks -->
+    <div class="contact-section-title">PROFILES & NETWORKS</div>
+    <div class="social-grid">
+      
+      <!-- GitHub -->
+      <a href="https://github.com/yichun-liao" target="_blank" rel="noopener" class="btn-retro">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xIDNoNWwyIDJoN3Y4SDFWM3ptMiAydjZoMTBWN0g3LjE3TDUuMTcgNUgzeiIvPjwvc3ZnPg==" class="retro-icon" alt="" />
+        GITHUB ↗
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/yichun-liao" target="_blank" rel="noopener" class="btn-retro">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYyaDN2MTBIMlY0aDNWMnptMiAyaDJWM0g3djF6TTQgNnY2aDhWNkg0eiIvPjwvc3ZnPg==" class="retro-icon" alt="" />
+        LINKEDIN ↗
+      </a>
+
+      <!-- Scholar -->
+      <!-- <a href="https://scholar.google.com" target="_blank" rel="noopener" class="btn-retro">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDJMMSA2bDcgNCA3LTQtNy00em0tNC41IDUuNXYzLjVsNC41IDIgNC41LTJWOi41TDggOS41bC00LjUtMnoiLz48L3N2Zz4=" class="retro-icon" alt="" />
+        SCHOLAR ↗
+      </a> -->
+
+    </div>
+
+    <!-- Timezone & Location -->
+    <div class="location-info">
+      <div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDJoNHYyaDJ2NGgtMnYyaC0ydjRIOHYtNEg2VjhINFY0aDJWMnptMiAzSDd2MmgyVjVIN3oiLz48L3N2Zz4=" class="retro-icon" alt="" />
+        <strong>Location:</strong> Colorado, USA &nbsp;|&nbsp; 
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDFoNnYxaDJ2MmgxdjZoLTF2MmgtMnYxSDV2LTFIM3YtMkgyVjRoMVYyaDJWMXptMSAydjEwaDRWM0g2em0yIDJ2M3gyVjdIOVY1SDh6Ii8+PC9zdmc+" class="retro-icon" alt="" />
+        <strong>Timezone:</strong> Mountain Time (UTC-7 / MST)
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Brief Collaboration Note Box -->
+  <div style="border: 2px solid #000; padding: 14px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
+    <strong style="display: flex; align-items: center; gap: 6px; font-family: 'VT323', monospace; font-size: 1.2rem; margin-bottom: 6px;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYxaDF2NGgtMXYyaC0xdjJINlY5SDVWN0g4VjNoMVYyem0yIDEwaDJ2MUg3di0xem0tMSAyaDR2MUg2di0xeG0xLTl2M2gyVjVIN3oiLz48L3N2Zz4=" class="retro-icon" style="width:16px; height:16px;" alt="" />
+      INQUIRIES & INTERESTS
+    </strong>
+    <p style="font-size: 0.95rem; line-height: 1.5; color: #444; margin: 0;">
+      Always open to discussions on system identification algorithms, quantitative value trading strategies, and academic research collaborations.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  window.copyEmailToClipboard = function() {
+    const emailText = document.getElementById('user-email-text')?.innerText;
+    const btn = document.getElementById('copy-email-btn');
+
+    if (emailText && btn) {
+      navigator.clipboard.writeText(emailText).then(() => {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = `<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDFoNnYyaDF2MTJINFYzaDFWMXptMSAydjFoNFYzSDZ6bS0xIDJoNnY4SDVWNXoiLz48L3N2Zz4=" class="retro-icon" alt="" /> COPIED! [✓]`;
+
+        setTimeout(() => {
+          btn.innerHTML = origHTML;
+        }, 1500);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    }
+  };
+</script>
