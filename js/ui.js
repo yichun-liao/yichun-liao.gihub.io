@@ -122,7 +122,7 @@ window.changeLanguage = function(selectedLang) {
     if (targetUrl) {
       setTimeout(() => {
         window.location.href = targetUrl;
-      }, 10);
+      }, 0);
       return;
     }
   } else {
