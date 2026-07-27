@@ -18,28 +18,29 @@
       My primary technical strengths and research domains encompass the following specialized areas:
     </p>
     <ul style="padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
-      <li><strong>System Identification & Noise Filtering:</strong> Formulating mathematical dynamic models from empirical input-output data, utilizing Extended/Unscented Kalman Filtering, and applying recursive estimation algorithms.</li>
+      <li><strong>System Identification & Control:</strong> Formulating mathematical dynamic models from empirical input-output data, and applying optimal control algorithms to control the system.</li>
+      <li><strong>State Estimation & Sensor Fusion:</strong> Deriving quaternion-based dynamic models and update matrices (Jacobians) to implement Extended Kalman Filters (EKF) for accurate IMU orientation tracking.</li>
+      <li><strong>Control Theory & Dynamic Simulation:</strong> Developing robust feedback control loops, and simulated physical systems with MATLAB Simulink & Simscape.</li>
       <li><strong>Quantitative Value Investing Strategies:</strong> Designing systematic, rule-based algorithmic screening models based on fundamental financial metrics and multi-stage systematic profit-taking logic.</li>
-      <li><strong>Control Theory & Dynamic Simulation:</strong> Developing robust feedback control loops, model predictive control (MPC), and automated state-space models.</li>
-      <li><strong>Backtesting & Financial Data Analytics:</strong> Constructing rigorous testing environments leveraging academic databases (Compustat, WRDS) to validate algorithmic robust performance across historical stress scenarios.</li>
+      <li><strong>Backtesting & Financial Data Analytics:</strong> Constructing rigorous testing environments leveraging databases to validate algorithmic robust performance across historical stress scenarios.</li>
     </ul>
   </div>
 
-  <!-- 3. Quote & Engineering Philosophy -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Methodology & Engineering Philosophy</h3>
-    
-    <blockquote style="border-left: 4px solid #000; padding: 10px 14px; margin: 16px 0; background: #f4f0e6; font-style: italic;">
-      "In the presence of measurement noise and unmodeled dynamics, mathematical structure bridges the gap between raw empirical observation and predictive truth."
-    </blockquote>
+ <!-- 3. Technical Approach -->
+<div style="margin-bottom: 24px;">
+  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Technical Approach</h3>
+  
+  <blockquote style="border-left: 4px solid #000; padding: 10px 14px; margin: 16px 0; background: #f4f0e6; font-style: italic;">
+    "Data provides the model, but analytical structure provides the safety guarantees."
+  </blockquote>
 
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      Engineering dynamic models requires balancing theoretical mathematical elegance with computational performance. When dealing with real-world empirical datasets—whether telemetry from sensors or corporate accounting metrics—standard deterministic assumptions often break down under measurement uncertainty.
-    </p>
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      To address these challenges, my methodology emphasizes step-by-step analytical proofing, multi-source data verification, and empirical stress-testing against edge cases prior to algorithm deployment.
-    </p>
-  </div>
+  <p style="margin-bottom: 12px; line-height: 1.7;">
+    Real-world dynamic systems rarely match textbook assumptions—IMU sensor data carries noise, system dynamics shift, and financial time-series exhibit heavy tail risks. 
+  </p>
+  <p style="margin-bottom: 12px; line-height: 1.7;">
+    My approach focuses on bridging statistical learning with formal dynamic guarantees: deriving analytical update matrices for state estimation, constructing data-driven Control Barrier Functions (CBFs) for safety, and stress-testing algorithms against edge cases before implementation.
+  </p>
+</div>
 
   <!-- 4. Research & Projects Timeline -->
   <div style="margin-bottom: 24px;">
