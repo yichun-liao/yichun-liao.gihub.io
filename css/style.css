@@ -45,11 +45,6 @@ body, html {
   pointer-events: all;
 }
 
-#desktop-area {
-  touch-action: none; /* 防止手機拖動按鈕時觸發頁面的預設滾動行為 */
-  user-select: none;  /* 防止拖動時誤選中文字 */
-}
-
 /* Viewport Scanline Overlay */
 .crt-overlay {
   position: absolute;

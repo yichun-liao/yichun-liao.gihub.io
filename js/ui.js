@@ -104,45 +104,11 @@ function goHome() {
 
 /* 浮動按鈕動畫邏輯 */
 let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-
-// 計算觸控/滑鼠相對於桌面中心的比例 (-1 ~ 1)
-function updateInputPosition(clientX, clientY) {
-  const rect = desktopArea.getBoundingClientRect();
-  const rawX = (clientX - rect.left - rect.width / 2) / (rect.width / 2);
-  const rawY = (clientY - rect.top - rect.height / 2) / (rect.height / 2);
-
-  // 限制最大位移幅度在 -1.2 ~ 1.2 之間，避免拉太遠
-  mouseX = Math.max(-1.2, Math.min(1.2, rawX));
-  mouseY = Math.max(-1.2, Math.min(1.2, rawY));
-}
-
-// 歸零（觸控放開或滑鼠移出時觸發自動回中）
-function resetInputPosition() {
-  mouseX = 0;
-  mouseY = 0;
-}
-
-// 💻 電腦端：滑鼠移動與移出
 desktopArea.addEventListener('mousemove', (e) => {
-  updateInputPosition(e.clientX, e.clientY);
+  const rect = desktopArea.getBoundingClientRect();
+  mouseX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+  mouseY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
 });
-desktopArea.addEventListener('mouseleave', resetInputPosition);
-
-// 📱 手機端：手指觸控與放開
-desktopArea.addEventListener('touchstart', (e) => {
-  if (e.touches.length > 0) {
-    updateInputPosition(e.touches[0].clientX, e.touches[0].clientY);
-  }
-}, { passive: true });
-
-desktopArea.addEventListener('touchmove', (e) => {
-  if (e.touches.length > 0) {
-    updateInputPosition(e.touches[0].clientX, e.touches[0].clientY);
-  }
-}, { passive: true });
-
-desktopArea.addEventListener('touchend', resetInputPosition);
-desktopArea.addEventListener('touchcancel', resetInputPosition);
 
 function animateFloatingButtons() {
   targetX += (mouseX - targetX) * 0.06;
