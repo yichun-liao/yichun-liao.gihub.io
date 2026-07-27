@@ -111,8 +111,11 @@ function renderUI() {
 // 🌐 下拉選單觸發語言切換
 window.changeLanguage = function(selectedLang) {
   currentLang = selectedLang;
+
   try {
     localStorage.setItem('site_lang_v2', currentLang);
+    document.cookie = `site_lang_v2=${currentLang}; path=/; max-age=31536000; SameSite=Lax`;
+    document.cookie = `site_lang=${currentLang}; path=/; max-age=31536000; SameSite=Lax`;
   } catch (e) { /* ignore storage error */ }
 
   const currentPath = window.location.pathname;
@@ -122,16 +125,28 @@ window.changeLanguage = function(selectedLang) {
   const isHomePage = ['', '/zh-hant', '/zh-hans'].includes(normalizedPath);
 
   if (isHomePage) {
+    let targetUrl = '';
     if (selectedLang === 'zh_hant' && !currentPath.includes('/zh-hant')) {
-      window.location.href = `/zh-hant/${currentSearch}`;
-      return;
+      targetUrl = `/zh-hant/${currentSearch}`;
     } else if (selectedLang === 'zh_hans' && !currentPath.includes('/zh-hans')) {
-      window.location.href = `/zh-hans/${currentSearch}`;
-      return;
+      targetUrl = `/zh-hans/${currentSearch}`;
     } else if (selectedLang === 'en' && (currentPath.includes('/zh-hant') || currentPath.includes('/zh-hans'))) {
-      window.location.href = `/${currentSearch}`;
+      targetUrl = `/${currentSearch}`;
+    }
+
+    if (targetUrl) {
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 10);
       return;
     }
+  } else {
+    let cleanPath = currentPath.replace(/^\/(zh-hant|zh-hans)/, '');
+    let newPath = cleanPath;
+    if (selectedLang === 'zh_hant') newPath = `/zh-hant${cleanPath}`;
+    else if (selectedLang === 'zh_hans') newPath = `/zh-hans${cleanPath}`;
+
+    history.pushState({ pageId: activePageId }, '', `${newPath}${currentSearch}`);
   }
 
   renderUI();
