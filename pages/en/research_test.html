@@ -1,0 +1,270 @@
+<!-- pages/research.html -->
+<style>
+  .research-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .filter-list {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    background: #fff;
+    border: 2px solid #000;
+    padding: 3px 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    transition: all 0.12s ease;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: #000;
+    color: #fff;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  /* Citation List Layout */
+  .citation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Individual Citation Strip */
+  .citation-item {
+    border: 2px solid #000;
+    background: #ffffff;
+    box-shadow: 4px 4px 0px #000;
+    padding: 16px;
+    position: relative;
+  }
+
+  .citation-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .status-badge {
+    background: #000;
+    color: #fff;
+    padding: 2px 6px;
+    font-family: 'VT323', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+  }
+
+  .citation-body {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+  }
+
+  /* Highlight your name in citations */
+  .my-name {
+    font-weight: 700;
+    text-decoration: underline;
+    background: #f0ebe0;
+    padding: 0 4px;
+  }
+
+  .paper-title {
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  /* Action Buttons Bar */
+  .citation-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .action-link {
+    border: 1px solid #000;
+    background: #fff;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'VT323', monospace;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 2px 2px 0px #000;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .action-link:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  /* Collapsible BibTeX Drawer */
+  .bibtex-drawer {
+    display: none;
+    margin-top: 12px;
+    background: #f4f0e6;
+    border: 2px dashed #000;
+    padding: 12px;
+    font-family: 'VT323', monospace;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+    position: relative;
+  }
+
+  .bibtex-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 2px 8px;
+    font-family: 'VT323', monospace;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .bibtex-copy-btn:hover {
+    background: #333;
+  }
+</style>
+
+<!-- Top Category Filter Bar -->
+<div class="research-header">
+  <div class="filter-list">
+    <span class="filter-label">FILTER:</span>
+    <button class="filter-btn active" onclick="filterResearch('all', this)">ALL</button>
+    <button class="filter-btn" onclick="filterResearch('journal', this)">JOURNAL</button>
+    <button class="filter-btn" onclick="filterResearch('conference', this)">CONFERENCE</button>
+    <button class="filter-btn" onclick="filterResearch('preprint', this)">PREPRINT</button>
+  </div>
+</div>
+
+<!-- Citation Items List -->
+<div class="citation-list">
+
+  <!-- Citation Item 1 -->
+  <!-- <div class="citation-item" data-type="journal">
+    <div class="citation-meta">
+      <span>[JOURNAL ARTICLE] • 2026</span>
+      <span class="status-badge">PUBLISHED</span>
+    </div>
+    <div class="citation-body">
+      <span class="my-name">YiChun Chen</span>, Co-Author A, Co-Author B. 
+      "<span class="paper-title">Data-Driven System Identification and Dynamic Filtering under Measurement Noise</span>." 
+      <em>IEEE Transactions on Control Systems Technology</em>, Vol. 34, No. 2, pp. 102–115, 2026.
+    </div>
+    <div class="citation-actions">
+      <a href="#" class="action-link" onclick="alert('PDF Link')">PDF ↗</a>
+      <a href="#" class="action-link" onclick="alert('DOI Link')">DOI ↗</a>
+      <a href="#" class="action-link" onclick="alert('Code Link')">CODE ↗</a>
+      <button class="action-link" onclick="toggleBibtex('bib1')">BIBTEX 📑</button>
+    </div> -->
+    <!-- BibTeX Drawer -->
+    <!-- <div id="bib1" class="bibtex-drawer">
+      <button class="bibtex-copy-btn" onclick="copyBibtex('bib1-text', this)">COPY</button>
+      <code id="bib1-text">@article{chen2026datadriven,
+  title={Data-Driven System Identification and Dynamic Filtering under Measurement Noise},
+  author={Chen, YiChun and Co-Author A and Co-Author B},
+  journal={IEEE Transactions on Control Systems Technology},
+  volume={34},
+  number={2},
+  pages={102--115},
+  year={2026}
+}</code>
+    </div>
+  </div> -->
+
+  <!-- Citation Item 2 -->
+  <!-- <div class="citation-item" data-type="preprint">
+    <div class="citation-meta">
+      <span>[PREPRINT] • 2026</span>
+      <span class="status-badge">UNDER REVIEW</span>
+    </div>
+    <div class="citation-body">
+      Co-Author A, <span class="my-name">YiChun Chen</span>. 
+      "<span class="paper-title">Fundamental Value Investment Strategies: A Multi-Stage Algorithmic Framework</span>." 
+      <em>arXiv preprint arXiv:2607.12345</em>, 2026.
+    </div>
+    <div class="citation-actions">
+      <a href="#" class="action-link" onclick="alert('arXiv Link')">ARXIV ↗</a>
+      <a href="#" class="action-link" onclick="alert('Code Link')">CODE ↗</a>
+      <button class="action-link" onclick="toggleBibtex('bib2')">BIBTEX 📑</button>
+    </div> -->
+    <!-- BibTeX Drawer -->
+    <!-- <div id="bib2" class="bibtex-drawer">
+      <button class="bibtex-copy-btn" onclick="copyBibtex('bib2-text', this)">COPY</button>
+      <code id="bib2-text">@article{chen2026fundamental,
+  title={Fundamental Value Investment Strategies: A Multi-Stage Algorithmic Framework},
+  author={Co-Author A and Chen, YiChun},
+  journal={arXiv preprint arXiv:2607.12345},
+  year={2026}
+}</code>
+    </div>
+  </div> -->
+
+</div>
+
+<script>
+  // Filter research items by publication type
+  window.filterResearch = function(type, btnEl) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const items = document.querySelectorAll('.citation-item');
+    items.forEach(item => {
+      item.style.display = (type === 'all' || item.dataset.type === type) ? 'block' : 'none';
+    });
+  };
+
+  // Toggle BibTeX drawer display
+  window.toggleBibtex = function(bibId) {
+    const el = document.getElementById(bibId);
+    if (el) {
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+  };
+
+  // Copy BibTeX string to clipboard
+  window.copyBibtex = function(textId, btnEl) {
+    const text = document.getElementById(textId)?.innerText;
+    if (text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const origText = btnEl.innerText;
+        btnEl.innerText = 'COPIED!';
+        setTimeout(() => btnEl.innerText = origText, 1500);
+      });
+    }
+  };
+</script>
