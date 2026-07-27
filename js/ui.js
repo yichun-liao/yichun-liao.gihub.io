@@ -105,48 +105,45 @@ function goHome() {
 /* 浮動按鈕動畫邏輯 */
 let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
 
-// 1. Desktop Mouse Motion Listener
-desktopArea.addEventListener('mousemove', (e) => {
+// 計算觸控/滑鼠相對於桌面中心的比例 (-1 ~ 1)
+function updateInputPosition(clientX, clientY) {
   const rect = desktopArea.getBoundingClientRect();
-  mouseX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-  mouseY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+  const rawX = (clientX - rect.left - rect.width / 2) / (rect.width / 2);
+  const rawY = (clientY - rect.top - rect.height / 2) / (rect.height / 2);
+
+  // 限制最大位移幅度在 -1.2 ~ 1.2 之間，避免拉太遠
+  mouseX = Math.max(-1.2, Math.min(1.2, rawX));
+  mouseY = Math.max(-1.2, Math.min(1.2, rawY));
+}
+
+// 歸零（觸控放開或滑鼠移出時觸發自動回中）
+function resetInputPosition() {
+  mouseX = 0;
+  mouseY = 0;
+}
+
+// 💻 電腦端：滑鼠移動與移出
+desktopArea.addEventListener('mousemove', (e) => {
+  updateInputPosition(e.clientX, e.clientY);
 });
+desktopArea.addEventListener('mouseleave', resetInputPosition);
 
-// 2. Mobile Gyroscope Handler
-function handleOrientation(e) {
-  if (e.gamma === null || e.beta === null) return;
-
-  const restingPitch = 45; // Assume user holds phone at ~45° incline
-  const maxTilt = 30;      // 30° tilt reaches full intensity (-1 or +1)
-
-  // Normalize gamma (left/right roll) & beta (front/back pitch) to [-1, 1] range
-  mouseX = Math.max(-1, Math.min(1, e.gamma / maxTilt));
-  mouseY = Math.max(-1, Math.min(1, (e.beta - restingPitch) / maxTilt));
-}
-
-// 3. Gyroscope Initialization (With iOS Permission Handler)
-async function initGyroscope() {
-  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-    try {
-      const permission = await DeviceOrientationEvent.requestPermission();
-      if (permission === 'granted') {
-        window.addEventListener('deviceorientation', handleOrientation);
-      }
-    } catch (err) {
-      console.error('Gyroscope permission error:', err);
-    }
-  } else if ('DeviceOrientationEvent' in window) {
-    window.addEventListener('deviceorientation', handleOrientation);
+// 📱 手機端：手指觸控與放開
+desktopArea.addEventListener('touchstart', (e) => {
+  if (e.touches.length > 0) {
+    updateInputPosition(e.touches[0].clientX, e.touches[0].clientY);
   }
-}
+}, { passive: true });
 
-// Trigger gyro permission request on first touch for iOS support
-const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-if (isMobile) {
-  window.addEventListener('touchstart', initGyroscope, { once: true });
-}
+desktopArea.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    updateInputPosition(e.touches[0].clientX, e.touches[0].clientY);
+  }
+}, { passive: true });
 
-// 4. Animation Loop (Reuses mouseX & mouseY seamlessly)
+desktopArea.addEventListener('touchend', resetInputPosition);
+desktopArea.addEventListener('touchcancel', resetInputPosition);
+
 function animateFloatingButtons() {
   targetX += (mouseX - targetX) * 0.06;
   targetY += (mouseY - targetY) * 0.06;
