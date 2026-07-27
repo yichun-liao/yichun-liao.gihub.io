@@ -104,12 +104,49 @@ function goHome() {
 
 /* 浮動按鈕動畫邏輯 */
 let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+
+// 1. Desktop Mouse Motion Listener
 desktopArea.addEventListener('mousemove', (e) => {
   const rect = desktopArea.getBoundingClientRect();
   mouseX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
   mouseY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
 });
 
+// 2. Mobile Gyroscope Handler
+function handleOrientation(e) {
+  if (e.gamma === null || e.beta === null) return;
+
+  const restingPitch = 45; // Assume user holds phone at ~45° incline
+  const maxTilt = 30;      // 30° tilt reaches full intensity (-1 or +1)
+
+  // Normalize gamma (left/right roll) & beta (front/back pitch) to [-1, 1] range
+  mouseX = Math.max(-1, Math.min(1, e.gamma / maxTilt));
+  mouseY = Math.max(-1, Math.min(1, (e.beta - restingPitch) / maxTilt));
+}
+
+// 3. Gyroscope Initialization (With iOS Permission Handler)
+async function initGyroscope() {
+  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    try {
+      const permission = await DeviceOrientationEvent.requestPermission();
+      if (permission === 'granted') {
+        window.addEventListener('deviceorientation', handleOrientation);
+      }
+    } catch (err) {
+      console.error('Gyroscope permission error:', err);
+    }
+  } else if ('DeviceOrientationEvent' in window) {
+    window.addEventListener('deviceorientation', handleOrientation);
+  }
+}
+
+// Trigger gyro permission request on first touch for iOS support
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+if (isMobile) {
+  window.addEventListener('touchstart', initGyroscope, { once: true });
+}
+
+// 4. Animation Loop (Reuses mouseX & mouseY seamlessly)
 function animateFloatingButtons() {
   targetX += (mouseX - targetX) * 0.06;
   targetY += (mouseY - targetY) * 0.06;
