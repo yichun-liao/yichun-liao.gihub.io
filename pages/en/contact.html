@@ -19,6 +19,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Prevents status badge overflow on small screens */
+    gap: 8px;
     border-bottom: 2px solid #000;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -31,6 +33,7 @@
     color: #fff;
     padding: 2px 8px;
     font-size: 1rem;
+    white-space: nowrap;
   }
 
   .contact-section-title {
@@ -48,12 +51,11 @@
     height: 14px;
     display: inline-block;
     vertical-align: middle;
-    image-rendering: pixelated; /* 確保 1-bit 點陣點對點清晰 */
+    image-rendering: pixelated;
     image-rendering: crisp-edges;
     pointer-events: none;
   }
 
-  /* 當按鈕 Hover 或為 Primary 時，自動將黑色點陣圖標反白成白色 */
   .btn-retro.primary .retro-icon,
   .btn-retro:hover .retro-icon {
     filter: invert(1);
@@ -74,10 +76,12 @@
 
   .email-address {
     font-family: 'VT323', monospace;
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 4.5vw, 1.5rem); /* Dynamic responsive sizing */
     font-weight: bold;
     color: #000;
     letter-spacing: 0.5px;
+    word-break: break-all;                    /* Prevents long emails from breaking bounds */
+    overflow-wrap: anywhere;
   }
 
   .btn-group {
@@ -121,7 +125,7 @@
   /* Social Links Grid */
   .social-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
     margin-bottom: 24px;
   }
@@ -138,6 +142,27 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
+  }
+
+  /* Mobile Layout Adjustments */
+  @media (max-width: 480px) {
+    .contact-card {
+      padding: 14px; /* Reclaims horizontal space on smaller viewports */
+    }
+
+    .email-box {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-group {
+      width: 100%;
+    }
+
+    .btn-group .btn-retro {
+      flex: 1;
+      justify-content: center;
+    }
   }
 </style>
 
@@ -167,7 +192,7 @@
 
         <!-- Mail app -->
         <a href="mailto:yichun.chen@example.com" class="btn-retro" title="Open in local mail client">
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xIDNoMTR2MTBIMVYzem0yIDJ2MWw1IDMgNS0zVjVIM3ptMCAyLjV2My41aDEwVjcuNUw4IDEwLjUgMyA3LjV6Ii8+PC9zdmc+" class="retro-icon" alt="" />
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xIDNoMTR2MTBIMVYzem0yIDJ2MWw1IDMgNS0zVjVIM3ptMCAyLjV2My41aDEwVjcuNUw4 IDEwLjUgMyA3LjV6Ii8+PC9zdmc+" class="retro-icon" alt="" />
           MAIL APP
         </a>
       </div>
@@ -185,15 +210,9 @@
 
       <!-- LinkedIn -->
       <a href="https://linkedin.com/in/yichun-liao" target="_blank" rel="noopener" class="btn-retro">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYyaDN2MTBIMlY0aDNWMnptMiAyaDJWM0g3djF6TTQgNnY2aDhWNkg0eiIvPjwvc3ZnPg==" class="retro-icon" alt="" />
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYyaDN2MTBIMlY0aDNWMnptMiAyaDJWM3g3djF6TTQgNnY2aDhWNkg0eiIvPjwvc3ZnPg==" class="retro-icon" alt="" />
         LINKEDIN ↗
       </a>
-
-      <!-- Scholar -->
-      <!-- <a href="https://scholar.google.com" target="_blank" rel="noopener" class="btn-retro">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDJMMSA2bDcgNCA3LTQtNy00em0tNC41IDUuNXYzLjVsNC41IDIgNC41LTJWOi41TDggOS41bC00LjUtMnoiLz48L3N2Zz4=" class="retro-icon" alt="" />
-        SCHOLAR ↗
-      </a> -->
 
     </div>
 
@@ -212,7 +231,7 @@
   <!-- Brief Collaboration Note Box -->
   <div style="border: 2px solid #000; padding: 14px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
     <strong style="display: flex; align-items: center; gap: 6px; font-family: 'VT323', monospace; font-size: 1.2rem; margin-bottom: 6px;">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYxaDF2NGgtMXYyaC0xdjJINlY5SDVWN0g4VjNoMVYyem0yIDEwaDJ2MUg3di0xem0tMSAyaDR2MUg2di0xeG0xLTl2M2gyVjVIN3oiLz48L3N2Zz4=" class="retro-icon" style="width:16px; height:16px;" alt="" />
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDJoNnYxaDF2NGgtMXYyaC0xdjJINlY5SDVWN0g4VjNoMVYyem0yIDEwaDJ2MUg3di0xem0tMSAyaDR2MUg2di0xeG0xLTl2M3gyVjdIOVY1SDh6Ii8+PC9zdmc+" class="retro-icon" style="width:16px; height:16px;" alt="" />
       INQUIRIES & INTERESTS
     </strong>
     <p style="font-size: 0.95rem; line-height: 1.5; color: #444; margin: 0;">
