@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /pages/
+
+Sitemap: https://yichunliao.com/sitemap.xml
