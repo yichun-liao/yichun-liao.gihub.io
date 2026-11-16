@@ -38,6 +38,12 @@
     { type: 'cards_grid', label: 'Cards Grid', short: 'CARDS GRID' },
     { type: 'status_notice', label: 'Status Notice', short: 'STATUS NOTICE' },
     { type: 'contact_card', label: 'Contact Card', short: 'CONTACT CARD' },
+    { type: 'cv_header', label: 'CV Header & PDF', short: 'CV HEADER' },
+    { type: 'cv_timeline', label: 'CV Timeline', short: 'CV TIMELINE' },
+    { type: 'skills_matrix', label: 'Skills Visual', short: 'SKILLS VISUAL' },
+    { type: 'project_showcase', label: 'Project Showcase', short: 'PROJECT SHOWCASE' },
+    { type: 'publications_list', label: 'Publications', short: 'PUBLICATIONS' },
+    { type: 'notes_list', label: 'Notes & Articles', short: 'NOTES & ARTICLES' },
     { type: 'custom_html', label: 'Custom HTML', short: 'CUSTOM HTML' }
   ];
 
@@ -564,6 +570,190 @@
           noteHeading: 'INQUIRIES',
           noteBody: 'Feel free to reach out for research collaborations or opportunities.'
         };
+      case 'cv_header':
+        return {
+          id,
+          type: 'cv_header',
+          title: 'Curriculum Vitae',
+          subtitle: 'Last Updated: November 2026 // Ph.D. Researcher, CU Boulder',
+          statusBadge: 'CV // PDF READY',
+          downloadLabel: 'DOWNLOAD CV (PDF)',
+          downloadUrl: '/assets/YiChun_Liao_CV.pdf',
+          downloadFilename: 'YiChun_Liao_CV.pdf',
+          openNewTab: true,
+          secondaryLabel: 'GOOGLE SCHOLAR ↗',
+          secondaryUrl: 'https://scholar.google.com/'
+        };
+      case 'cv_timeline':
+        return {
+          id,
+          type: 'cv_timeline',
+          heading: '01 // Education & Research Experience',
+          showTimelineRail: true,
+          items: [
+            {
+              title: 'Ph.D. in Electrical & Computer Engineering',
+              organization: 'University of Colorado Boulder',
+              period: '2023 – Present',
+              location: 'Boulder, CO, USA',
+              badge: 'CURRENT',
+              summary: 'Researching **safety-critical control** and **statistical system identification** for autonomous cyber-physical systems.',
+              bullets: [
+                'Developed data-driven Control Barrier Function (CBF) synthesis pipelines under bounded uncertainty.',
+                'Co-authored conference and journal manuscripts on formal safety verification.'
+              ]
+            },
+            {
+              title: 'M.S. in Electrical Engineering',
+              organization: 'National Taiwan University',
+              period: '2020 – 2022',
+              location: 'Taipei, Taiwan',
+              badge: 'M.S.',
+              summary: 'Focused on robust nonlinear control and real-time trajectory optimization.',
+              bullets: [
+                'Implemented hardware-in-the-loop simulation benchmarks in MATLAB/Simulink and C++.'
+              ]
+            }
+          ]
+        };
+      case 'skills_matrix':
+        return {
+          id,
+          type: 'skills_matrix',
+          heading: '02 // Technical Skills & Competencies',
+          displayMode: 'both',
+          columns: 2,
+          skillBars: [
+            { label: 'Control Theory & CBFs', category: 'THEORY', level: 92, note: 'Safety filters, Lyapunov & barrier certificates' },
+            { label: 'System Identification', category: 'STATISTICS', level: 88, note: 'Subspace ID, nonparametric & kernel methods' },
+            { label: 'Python / PyTorch / JAX', category: 'COMPUTING', level: 85, note: 'Scientific computing & differentiable optimization' },
+            { label: 'MATLAB / Simulink / C++', category: 'SIMULATION', level: 90, note: 'Real-time control & HIL verification' }
+          ],
+          skillGroups: [
+            {
+              title: 'Control & Verification',
+              skills: ['Control Barrier Functions', 'MPC', 'Lyapunov Stability', 'Reachability Analysis', 'Convex Optimization']
+            },
+            {
+              title: 'Languages & Tooling',
+              skills: ['Python', 'MATLAB', 'C++', 'Julia', 'CasADi', 'CVXPY', 'Git', 'LaTeX']
+            }
+          ]
+        };
+      case 'project_showcase':
+        return {
+          id,
+          type: 'project_showcase',
+          heading: 'Featured Engineering & Research Projects',
+          filterLabel: 'FILTER:',
+          allLabel: 'ALL',
+          columns: 2,
+          items: [
+            {
+              category: 'CONTROL',
+              badge: 'OPEN SOURCE',
+              title: 'Data-Driven Safety Filter Toolbox',
+              summary: 'Modular MATLAB & Python framework for synthesizing Control Barrier Functions from noisy trajectory data.',
+              tags: ['CBFs', 'System ID', 'QP'],
+              buttonLabel: 'INSPECT PROJECT →',
+              detailMode: 'inline',
+              detailTitle: 'Data-Driven Safety Filter Toolbox',
+              detailMeta: 'Category: Control // Status: Active // Stack: MATLAB, Python, CasADi',
+              detailBody: '**Overview**\nConstructs provably safe quadratic-program safety filters directly from finite-sample system rollouts.\n\n**Key Highlights**\n- Tight statistical error bounds integrated into CBF constraints.\n- Tested on 2D/3D autonomous navigation and inverted pendulum benchmarks.',
+              detailLinks: [
+                { label: 'GITHUB REPO ↗', url: 'https://github.com/yichun-liao' },
+                { label: 'DOCS ↗', url: 'https://yichunliao.com' }
+              ],
+              target: ''
+            },
+            {
+              category: 'SYSTEMS',
+              badge: 'WEB / 3D',
+              title: 'Macintosh 1984 Web Desktop & CMS',
+              summary: 'Interactive Three.js retro workstation with a JSON-driven Portfolio Studio and multi-language routing.',
+              tags: ['Three.js', 'Vanilla JS', 'Retro UI'],
+              buttonLabel: 'VIEW LIVE →',
+              detailMode: 'inline',
+              detailTitle: 'Macintosh 1984 Web Desktop & CMS',
+              detailMeta: 'Category: Systems // Status: Shipped // Zero Build Step',
+              detailBody: '**Overview**\nA fast, zero-dependency personal site combining a 3D Macintosh boot animation with a live visual CMS.\n\n**Architecture**\n- Single source of truth in data/site-content.json.\n- Real-time postMessage preview in Portfolio Studio.',
+              detailLinks: [
+                { label: 'SOURCE ↗', url: 'https://github.com/yichun-liao' }
+              ],
+              target: ''
+            }
+          ]
+        };
+      case 'publications_list':
+        return {
+          id,
+          type: 'publications_list',
+          heading: 'Selected Publications & Preprints',
+          filterLabel: 'FILTER:',
+          allLabel: 'ALL',
+          items: [
+            {
+              pubType: 'CONFERENCE',
+              year: '2026',
+              statusBadge: 'UNDER REVIEW',
+              authors: '**Yi-Chun Liao**, Co-Author Name',
+              title: 'Safety-Critical Control Synthesis via Statistical System Identification',
+              venue: 'IEEE Conference on Decision and Control (CDC)',
+              bibtex: '@inproceedings{liao2026safety,\n  title={Safety-Critical Control Synthesis via Statistical System Identification},\n  author={Liao, Yi-Chun and Name, Co-Author},\n  booktitle={IEEE CDC},\n  year={2026}\n}',
+              links: [
+                { label: 'ARXIV ↗', url: 'https://arxiv.org/' },
+                { label: 'CODE ↗', url: 'https://github.com/yichun-liao' }
+              ]
+            },
+            {
+              pubType: 'JOURNAL',
+              year: '2025',
+              statusBadge: 'PUBLISHED',
+              authors: '**Yi-Chun Liao**, Advisor Name',
+              title: 'Nonparametric Uncertainty Quantification for Autonomous Dynamical Systems',
+              venue: 'IEEE Transactions on Automatic Control (TAC)',
+              bibtex: '@article{liao2025nonparametric,\n  title={Nonparametric Uncertainty Quantification for Autonomous Dynamical Systems},\n  author={Liao, Yi-Chun and Name, Advisor},\n  journal={IEEE TAC},\n  year={2025}\n}',
+              links: [
+                { label: 'DOI ↗', url: 'https://ieeexplore.ieee.org/' }
+              ]
+            }
+          ]
+        };
+      case 'notes_list':
+        return {
+          id,
+          type: 'notes_list',
+          heading: 'Technical Notes & Field Logs',
+          filterLabel: 'FILTER:',
+          allLabel: 'ALL',
+          columns: 2,
+          items: [
+            {
+              category: 'CONTROL',
+              date: '2026-10-18',
+              readTime: '6 MIN READ',
+              title: 'Intuition Behind Control Barrier Functions',
+              summary: 'A concise walkthrough of forward invariance, Nagumo conditions, and QP-based safety filters.',
+              tags: ['CBFs', 'Safety', 'Notes'],
+              buttonLabel: 'READ NOTE →',
+              detailMode: 'inline',
+              noteBody: '**Why Barrier Functions?**\nGiven a safe set C = {x : h(x) >= 0}, we want every trajectory starting inside C to stay inside C for all future time.\n\n**Key Takeaways**\n- Enforce dh/dt >= -alpha(h(x)) via a lightweight quadratic program.\n- Combine nominal performance controllers with minimal-intervention safety filters.',
+              target: ''
+            },
+            {
+              category: 'SYSTEMS',
+              date: '2026-09-04',
+              readTime: '4 MIN READ',
+              title: 'Designing Zero-Build Retro Interfaces',
+              summary: 'Lessons learned building crisp 1-bit shadows, pixel icons, and fast static sites without bundlers.',
+              tags: ['UI', 'WebPerf', 'Retro'],
+              buttonLabel: 'READ NOTE →',
+              detailMode: 'inline',
+              noteBody: '**Constraints Breed Clarity**\nUsing plain HTML, CSS custom properties, and modular vanilla JS keeps bundle size tiny and maintenance effortless.\n\n**Tips**\n- Use shape-rendering: crispEdges on pixel SVGs.\n- Keep interactive state scoped to the component root.',
+              target: ''
+            }
+          ]
+        };
       case 'custom_html':
         return {
           id,
@@ -880,7 +1070,7 @@
   // ===================================================
 
   function makeTextField(labelText, value, onChange, options = {}) {
-    const { placeholder = '', hint = '', multiline = false, rows = 3, code = false, type = 'text' } = options;
+    const { placeholder = '', hint = '', multiline = false, rows = 3, code = false, type = 'text', min, max } = options;
     const input = multiline
       ? el('textarea', {
           className: `mac-textarea ${code ? 'code-input' : ''}`,
@@ -894,6 +1084,8 @@
           className: 'mac-input',
           placeholder,
           value: value ?? '',
+          min,
+          max,
           onInput: (e) => onChange(e.target.value)
         });
 
@@ -920,6 +1112,20 @@
     ]);
   }
 
+  function makeCheckboxField(labelText, checked, onChange, hint = '') {
+    return el('div', { className: 'field', style: 'justify-content: flex-end;' }, [
+      el('label', { className: 'check-label' }, [
+        el('input', {
+          type: 'checkbox',
+          checked: Boolean(checked),
+          onChange: (e) => onChange(e.target.checked)
+        }),
+        el('span', { textContent: labelText })
+      ]),
+      hint ? el('span', { className: 'field-hint', textContent: hint }) : null
+    ]);
+  }
+
   function makeActionTargetField(labelText, actionType, targetValue, onChange) {
     const tabs = state.content?.tabs || [];
     if (actionType === 'page' && tabs.length > 0) {
@@ -934,7 +1140,147 @@
     });
   }
 
-  function makeTagChipsEditor(labelText, tagsArray, onUpdate) {
+  function makeReorderControls(arr, idx, onRerender) {
+    return el('div', { className: 'tab-row-actions' }, [
+      el('button', {
+        type: 'button',
+        className: 'mac-btn mac-btn-xs',
+        textContent: '↑',
+        disabled: idx === 0,
+        onClick: () => {
+          pushUndoSnapshot();
+          if (moveArrayItem(arr, idx, -1)) {
+            onRerender();
+            markChanged();
+          }
+        }
+      }),
+      el('button', {
+        type: 'button',
+        className: 'mac-btn mac-btn-xs',
+        textContent: '↓',
+        disabled: idx === arr.length - 1,
+        onClick: () => {
+          pushUndoSnapshot();
+          if (moveArrayItem(arr, idx, 1)) {
+            onRerender();
+            markChanged();
+          }
+        }
+      }),
+      el('button', {
+        type: 'button',
+        className: 'mac-btn mac-btn-xs',
+        textContent: '✕',
+        onClick: () => {
+          pushUndoSnapshot();
+          arr.splice(idx, 1);
+          onRerender();
+          markChanged();
+        }
+      })
+    ]);
+  }
+
+  function makeStringListEditor(labelText, itemsArray, options = {}) {
+    const { addLabel = '+ Add Item', placeholder = 'Enter text...', defaultItem = '' } = options;
+    const section = el('div', { className: 'sublist-section' });
+
+    const renderList = () => {
+      section.innerHTML = '';
+      section.appendChild(
+        el('div', { className: 'sublist-header' }, [
+          el('span', { className: 'field-label', textContent: labelText }),
+          el('button', {
+            type: 'button',
+            className: 'mac-btn mac-btn-xs',
+            textContent: addLabel,
+            onClick: () => {
+              pushUndoSnapshot();
+              itemsArray.push(defaultItem);
+              renderList();
+              markChanged();
+            }
+          })
+        ])
+      );
+
+      itemsArray.forEach((val, idx) => {
+        section.appendChild(
+          el('div', { className: 'sublist-item-row' }, [
+            el('input', {
+              type: 'text',
+              className: 'mac-input mac-input-sm',
+              placeholder,
+              value: val ?? '',
+              onInput: (e) => {
+                pushUndoSnapshot(true);
+                itemsArray[idx] = e.target.value;
+                markChanged();
+              }
+            }),
+            makeReorderControls(itemsArray, idx, renderList)
+          ])
+        );
+      });
+    };
+
+    renderList();
+    return section;
+  }
+
+  function makeLinksListEditor(labelText, linksArray, addLabel = '+ Add Link') {
+    const section = el('div', { className: 'sublist-section' });
+
+    const renderLinks = () => {
+      section.innerHTML = '';
+      section.appendChild(
+        el('div', { className: 'sublist-header' }, [
+          el('span', { className: 'field-label', textContent: labelText }),
+          el('button', {
+            type: 'button',
+            className: 'mac-btn mac-btn-xs',
+            textContent: addLabel,
+            onClick: () => {
+              pushUndoSnapshot();
+              linksArray.push({ label: 'LINK ↗', url: 'https://' });
+              renderLinks();
+              markChanged();
+            }
+          })
+        ])
+      );
+
+      linksArray.forEach((lnk, idx) => {
+        section.appendChild(
+          el('div', { className: 'sublist-item' }, [
+            el('div', { className: 'sublist-item-head' }, [
+              el('span', { className: 'sublist-index', textContent: `LINK #${idx + 1}` }),
+              makeReorderControls(linksArray, idx, renderLinks)
+            ]),
+            el('div', { className: 'field-grid-2' }, [
+              makeTextField('Label', lnk.label, (v) => {
+                pushUndoSnapshot(true);
+                lnk.label = v;
+                markChanged();
+              }),
+              makeTextField('URL', lnk.url, (v) => {
+                pushUndoSnapshot(true);
+                lnk.url = v;
+                markChanged();
+              }, { placeholder: 'https://...' })
+            ])
+          ])
+        );
+      });
+    };
+
+    renderLinks();
+    return section;
+  }
+
+  function makeTagChipsEditor(labelText, tagsArray, options = {}) {
+    const { defaultTag = '#NewTag', addLabel = '+ Tag' } = typeof options === 'object' && options !== null ? options : {};
     const chipsWrap = el('div', { className: 'tag-chips-row' });
 
     const renderChips = () => {
@@ -969,10 +1315,10 @@
         el('button', {
           type: 'button',
           className: 'mac-btn mac-btn-xs',
-          textContent: '+ Tag',
+          textContent: addLabel,
           onClick: () => {
             pushUndoSnapshot();
-            tagsArray.push('#NewTag');
+            tagsArray.push(defaultTag);
             renderChips();
             markChanged();
           }
@@ -990,7 +1336,7 @@
   }
 
   // ===================================================
-  // BLOCK SPECIFIC EDITORS (All 8 Block Types)
+  // BLOCK SPECIFIC EDITORS (All 14 Block Types)
   // ===================================================
 
   function renderBlockBody(block, onSummaryChange) {
@@ -1826,6 +2172,706 @@
         break;
       }
 
+      case 'cv_header': {
+        container.appendChild(
+          el('div', { className: 'field-grid-2' }, [
+            makeTextField('Title', block.title, (v) => {
+              pushUndoSnapshot(true);
+              block.title = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeTextField('Status Badge', block.statusBadge, (v) => {
+              pushUndoSnapshot(true);
+              block.statusBadge = v;
+              markChanged();
+            })
+          ])
+        );
+        container.appendChild(
+          makeTextField('Subtitle / Last Updated', block.subtitle, (v) => {
+            pushUndoSnapshot(true);
+            block.subtitle = v;
+            markChanged();
+          })
+        );
+        container.appendChild(
+          el('div', { className: 'field-grid-2' }, [
+            makeTextField('Download Button Label', block.downloadLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.downloadLabel = v;
+              markChanged();
+            }, { placeholder: 'DOWNLOAD CV (PDF)' }),
+            makeTextField('Download PDF URL', block.downloadUrl, (v) => {
+              pushUndoSnapshot(true);
+              block.downloadUrl = v;
+              markChanged();
+            }, { placeholder: '/assets/CV.pdf' }),
+            makeTextField('Download Filename', block.downloadFilename, (v) => {
+              pushUndoSnapshot(true);
+              block.downloadFilename = v;
+              markChanged();
+            }, { placeholder: 'CV.pdf' }),
+            makeCheckboxField('Open PDF in new tab', block.openNewTab !== false, (checked) => {
+              pushUndoSnapshot();
+              block.openNewTab = checked;
+              markChanged();
+            }),
+            makeTextField('Secondary Button Label (optional)', block.secondaryLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.secondaryLabel = v;
+              markChanged();
+            }),
+            makeTextField('Secondary Button URL (optional)', block.secondaryUrl, (v) => {
+              pushUndoSnapshot(true);
+              block.secondaryUrl = v;
+              markChanged();
+            }, { placeholder: 'https://...' })
+          ])
+        );
+        break;
+      }
+
+      case 'cv_timeline': {
+        if (!Array.isArray(block.items)) block.items = [];
+        container.appendChild(
+          el('div', { className: 'field-grid-2' }, [
+            makeTextField('Section Heading', block.heading, (v) => {
+              pushUndoSnapshot(true);
+              block.heading = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeCheckboxField('Show Vertical Timeline Rail', block.showTimelineRail !== false, (checked) => {
+              pushUndoSnapshot();
+              block.showTimelineRail = checked;
+              markChanged();
+            })
+          ])
+        );
+
+        const timelineSection = el('div', { className: 'sublist-section' });
+        const renderEntries = () => {
+          timelineSection.innerHTML = '';
+          timelineSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Timeline Entries' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Entry',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.items.push({
+                    title: 'Position or Degree',
+                    organization: 'Institution / Company',
+                    period: '2025 – Present',
+                    location: '',
+                    badge: '',
+                    summary: '',
+                    bullets: []
+                  });
+                  renderEntries();
+                  onSummaryChange();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.items.forEach((item, idx) => {
+            if (!Array.isArray(item.bullets)) item.bullets = [];
+            timelineSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `ENTRY #${idx + 1}` }),
+                  makeReorderControls(block.items, idx, () => {
+                    renderEntries();
+                    onSummaryChange();
+                  })
+                ]),
+                el('div', { className: 'field-grid-2' }, [
+                  makeTextField('Title / Role / Degree', item.title, (v) => {
+                    pushUndoSnapshot(true);
+                    item.title = v;
+                    markChanged();
+                  }),
+                  makeTextField('Organization', item.organization, (v) => {
+                    pushUndoSnapshot(true);
+                    item.organization = v;
+                    markChanged();
+                  }),
+                  makeTextField('Period', item.period, (v) => {
+                    pushUndoSnapshot(true);
+                    item.period = v;
+                    markChanged();
+                  }, { placeholder: '2023 – Present' }),
+                  makeTextField('Location', item.location, (v) => {
+                    pushUndoSnapshot(true);
+                    item.location = v;
+                    markChanged();
+                  }, { placeholder: 'Boulder, CO' }),
+                  makeTextField('Badge (optional)', item.badge, (v) => {
+                    pushUndoSnapshot(true);
+                    item.badge = v;
+                    markChanged();
+                  }, { placeholder: 'CURRENT' })
+                ]),
+                makeTextField('Summary (supports **bold** & [link](url))', item.summary, (v) => {
+                  pushUndoSnapshot(true);
+                  item.summary = v;
+                  markChanged();
+                }, { multiline: true, rows: 2 }),
+                makeStringListEditor('Bullet Highlights', item.bullets, {
+                  addLabel: '+ Add Bullet',
+                  placeholder: 'Key achievement or responsibility...'
+                })
+              ])
+            );
+          });
+        };
+        renderEntries();
+        container.appendChild(timelineSection);
+        break;
+      }
+
+      case 'skills_matrix': {
+        if (!Array.isArray(block.skillBars)) block.skillBars = [];
+        if (!Array.isArray(block.skillGroups)) block.skillGroups = [];
+        container.appendChild(
+          el('div', { className: 'field-grid-3' }, [
+            makeTextField('Section Heading', block.heading, (v) => {
+              pushUndoSnapshot(true);
+              block.heading = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeSelectField('Display Mode', block.displayMode || 'both', [
+              { value: 'both', label: 'Bars + Pill Groups' },
+              { value: 'bars', label: 'Bars Only' },
+              { value: 'pills', label: 'Pill Groups Only' }
+            ], (v) => {
+              pushUndoSnapshot();
+              block.displayMode = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeSelectField('Pill Columns', String(block.columns || 2), [
+              { value: '1', label: '1 Column' },
+              { value: '2', label: '2 Columns' },
+              { value: '3', label: '3 Columns' }
+            ], (v) => {
+              pushUndoSnapshot();
+              block.columns = Number(v);
+              markChanged();
+            })
+          ])
+        );
+
+        const barsSection = el('div', { className: 'sublist-section' });
+        const renderSkillBars = () => {
+          barsSection.innerHTML = '';
+          barsSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Skill Proficiency Bars (0–100%)' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Skill Bar',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.skillBars.push({ label: 'New Skill', category: 'CORE', level: 85, note: '' });
+                  renderSkillBars();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.skillBars.forEach((bar, idx) => {
+            barsSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `SKILL BAR #${idx + 1}` }),
+                  makeReorderControls(block.skillBars, idx, renderSkillBars)
+                ]),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Skill Label', bar.label, (v) => {
+                    pushUndoSnapshot(true);
+                    bar.label = v;
+                    markChanged();
+                  }),
+                  makeTextField('Category Tag', bar.category, (v) => {
+                    pushUndoSnapshot(true);
+                    bar.category = v;
+                    markChanged();
+                  }),
+                  makeTextField('Level (0–100)', String(bar.level ?? 85), (v) => {
+                    pushUndoSnapshot(true);
+                    const num = Number(v);
+                    bar.level = Number.isFinite(num) ? Math.max(0, Math.min(100, Math.round(num))) : 0;
+                    markChanged();
+                  }, { type: 'number', min: 0, max: 100 })
+                ]),
+                makeTextField('Note / Details (optional)', bar.note, (v) => {
+                  pushUndoSnapshot(true);
+                  bar.note = v;
+                  markChanged();
+                })
+              ])
+            );
+          });
+        };
+        renderSkillBars();
+        container.appendChild(barsSection);
+
+        const groupsSection = el('div', { className: 'sublist-section' });
+        const renderSkillGroups = () => {
+          groupsSection.innerHTML = '';
+          groupsSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Skill Pill Groups' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Skill Group',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.skillGroups.push({ title: 'Competency Group', skills: ['Skill A', 'Skill B'] });
+                  renderSkillGroups();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.skillGroups.forEach((grp, idx) => {
+            if (!Array.isArray(grp.skills)) grp.skills = [];
+            groupsSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `GROUP #${idx + 1}` }),
+                  makeReorderControls(block.skillGroups, idx, renderSkillGroups)
+                ]),
+                makeTextField('Group Title', grp.title, (v) => {
+                  pushUndoSnapshot(true);
+                  grp.title = v;
+                  markChanged();
+                }),
+                makeTagChipsEditor('Skills', grp.skills, { defaultTag: 'New Skill', addLabel: '+ Skill' })
+              ])
+            );
+          });
+        };
+        renderSkillGroups();
+        container.appendChild(groupsSection);
+        break;
+      }
+
+      case 'project_showcase': {
+        if (!Array.isArray(block.items)) block.items = [];
+        container.appendChild(
+          el('div', { className: 'field-grid-2' }, [
+            makeTextField('Section Heading', block.heading, (v) => {
+              pushUndoSnapshot(true);
+              block.heading = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeSelectField('Columns', String(block.columns || 2), [
+              { value: '1', label: '1 Column' },
+              { value: '2', label: '2 Columns' },
+              { value: '3', label: '3 Columns' }
+            ], (v) => {
+              pushUndoSnapshot();
+              block.columns = Number(v);
+              markChanged();
+            }),
+            makeTextField('Filter Bar Label', block.filterLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.filterLabel = v;
+              markChanged();
+            }, { placeholder: 'FILTER:' }),
+            makeTextField('"All" Filter Label', block.allLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.allLabel = v;
+              markChanged();
+            }, { placeholder: 'ALL' })
+          ])
+        );
+
+        const projectsSection = el('div', { className: 'sublist-section' });
+        const renderProjects = () => {
+          projectsSection.innerHTML = '';
+          projectsSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Projects' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Project',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.items.push({
+                    category: 'RESEARCH',
+                    badge: 'NEW',
+                    title: 'New Project',
+                    summary: '',
+                    tags: [],
+                    buttonLabel: 'INSPECT →',
+                    detailMode: 'inline',
+                    detailTitle: 'New Project',
+                    detailMeta: '',
+                    detailBody: '',
+                    detailLinks: [],
+                    target: ''
+                  });
+                  renderProjects();
+                  onSummaryChange();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.items.forEach((item, idx) => {
+            if (!Array.isArray(item.tags)) item.tags = [];
+            if (!Array.isArray(item.detailLinks)) item.detailLinks = [];
+            const mode = item.detailMode || 'inline';
+            projectsSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `PROJECT #${idx + 1}` }),
+                  makeReorderControls(block.items, idx, () => {
+                    renderProjects();
+                    onSummaryChange();
+                  })
+                ]),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Category (Filter Key)', item.category, (v) => {
+                    pushUndoSnapshot(true);
+                    item.category = v;
+                    markChanged();
+                  }, { placeholder: 'CONTROL' }),
+                  makeTextField('Badge', item.badge, (v) => {
+                    pushUndoSnapshot(true);
+                    item.badge = v;
+                    markChanged();
+                  }),
+                  makeTextField('Title', item.title, (v) => {
+                    pushUndoSnapshot(true);
+                    item.title = v;
+                    markChanged();
+                  })
+                ]),
+                makeTextField('Card Summary', item.summary, (v) => {
+                  pushUndoSnapshot(true);
+                  item.summary = v;
+                  markChanged();
+                }, { multiline: true, rows: 2 }),
+                makeTagChipsEditor('Project Tags', item.tags, { defaultTag: 'Tag', addLabel: '+ Tag' }),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Button Label', item.buttonLabel, (v) => {
+                    pushUndoSnapshot(true);
+                    item.buttonLabel = v;
+                    markChanged();
+                  }, { placeholder: 'INSPECT →' }),
+                  makeSelectField('Detail Mode', mode, [
+                    { value: 'inline', label: 'Inline Detail View' },
+                    { value: 'url', label: 'External URL' },
+                    { value: 'page', label: 'Open Tab' }
+                  ], (v) => {
+                    pushUndoSnapshot();
+                    item.detailMode = v;
+                    if (v === 'page' && (!item.target || item.target.startsWith('http'))) {
+                      item.target = state.content.tabs[0]?.id || 'about';
+                    }
+                    renderProjects();
+                    markChanged();
+                  }),
+                  makeActionTargetField('Target (for URL / Tab mode)', mode, item.target, (v) => {
+                    pushUndoSnapshot(true);
+                    item.target = v;
+                    markChanged();
+                  })
+                ]),
+                el('div', { className: 'field-grid-2' }, [
+                  makeTextField('Inline Detail Title', item.detailTitle, (v) => {
+                    pushUndoSnapshot(true);
+                    item.detailTitle = v;
+                    markChanged();
+                  }),
+                  makeTextField('Inline Detail Meta', item.detailMeta, (v) => {
+                    pushUndoSnapshot(true);
+                    item.detailMeta = v;
+                    markChanged();
+                  }, { placeholder: 'Category: ... // Status: ...' })
+                ]),
+                makeTextField('Inline Detail Body (Markdown-lite)', item.detailBody, (v) => {
+                  pushUndoSnapshot(true);
+                  item.detailBody = v;
+                  markChanged();
+                }, { multiline: true, rows: 4 }),
+                makeLinksListEditor('Inline Detail Links', item.detailLinks, '+ Add Detail Link')
+              ])
+            );
+          });
+        };
+        renderProjects();
+        container.appendChild(projectsSection);
+        break;
+      }
+
+      case 'publications_list': {
+        if (!Array.isArray(block.items)) block.items = [];
+        container.appendChild(
+          el('div', { className: 'field-grid-3' }, [
+            makeTextField('Section Heading', block.heading, (v) => {
+              pushUndoSnapshot(true);
+              block.heading = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeTextField('Filter Bar Label', block.filterLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.filterLabel = v;
+              markChanged();
+            }, { placeholder: 'FILTER:' }),
+            makeTextField('"All" Filter Label', block.allLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.allLabel = v;
+              markChanged();
+            }, { placeholder: 'ALL' })
+          ])
+        );
+
+        const pubsSection = el('div', { className: 'sublist-section' });
+        const renderPubs = () => {
+          pubsSection.innerHTML = '';
+          pubsSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Publications' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Publication',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.items.push({
+                    pubType: 'CONFERENCE',
+                    year: '2026',
+                    statusBadge: 'PUBLISHED',
+                    authors: '**Yi-Chun Liao**',
+                    title: 'Paper Title',
+                    venue: 'Conference or Journal Name',
+                    bibtex: '',
+                    links: []
+                  });
+                  renderPubs();
+                  onSummaryChange();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.items.forEach((pub, idx) => {
+            if (!Array.isArray(pub.links)) pub.links = [];
+            pubsSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `PUBLICATION #${idx + 1}` }),
+                  makeReorderControls(block.items, idx, () => {
+                    renderPubs();
+                    onSummaryChange();
+                  })
+                ]),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Publication Type', pub.pubType, (v) => {
+                    pushUndoSnapshot(true);
+                    pub.pubType = v;
+                    markChanged();
+                  }, { placeholder: 'JOURNAL / CONFERENCE / PREPRINT' }),
+                  makeTextField('Year', pub.year, (v) => {
+                    pushUndoSnapshot(true);
+                    pub.year = v;
+                    markChanged();
+                  }, { placeholder: '2026' }),
+                  makeTextField('Status Badge', pub.statusBadge, (v) => {
+                    pushUndoSnapshot(true);
+                    pub.statusBadge = v;
+                    markChanged();
+                  }, { placeholder: 'PUBLISHED / UNDER REVIEW' })
+                ]),
+                makeTextField('Authors (use **Name** to bold)', pub.authors, (v) => {
+                  pushUndoSnapshot(true);
+                  pub.authors = v;
+                  markChanged();
+                }),
+                el('div', { className: 'field-grid-2' }, [
+                  makeTextField('Paper Title', pub.title, (v) => {
+                    pushUndoSnapshot(true);
+                    pub.title = v;
+                    markChanged();
+                  }),
+                  makeTextField('Venue / Journal', pub.venue, (v) => {
+                    pushUndoSnapshot(true);
+                    pub.venue = v;
+                    markChanged();
+                  })
+                ]),
+                makeTextField('BibTeX (leave empty to hide BIBTEX button)', pub.bibtex, (v) => {
+                  pushUndoSnapshot(true);
+                  pub.bibtex = v;
+                  markChanged();
+                }, { multiline: true, rows: 4, code: true }),
+                makeLinksListEditor('Paper Action Links', pub.links, '+ Add Link')
+              ])
+            );
+          });
+        };
+        renderPubs();
+        container.appendChild(pubsSection);
+        break;
+      }
+
+      case 'notes_list': {
+        if (!Array.isArray(block.items)) block.items = [];
+        container.appendChild(
+          el('div', { className: 'field-grid-2' }, [
+            makeTextField('Section Heading', block.heading, (v) => {
+              pushUndoSnapshot(true);
+              block.heading = v;
+              onSummaryChange();
+              markChanged();
+            }),
+            makeSelectField('Columns', String(block.columns || 2), [
+              { value: '1', label: '1 Column' },
+              { value: '2', label: '2 Columns' },
+              { value: '3', label: '3 Columns' }
+            ], (v) => {
+              pushUndoSnapshot();
+              block.columns = Number(v);
+              markChanged();
+            }),
+            makeTextField('Filter Bar Label', block.filterLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.filterLabel = v;
+              markChanged();
+            }, { placeholder: 'FILTER:' }),
+            makeTextField('"All" Filter Label', block.allLabel, (v) => {
+              pushUndoSnapshot(true);
+              block.allLabel = v;
+              markChanged();
+            }, { placeholder: 'ALL' })
+          ])
+        );
+
+        const notesSection = el('div', { className: 'sublist-section' });
+        const renderNotes = () => {
+          notesSection.innerHTML = '';
+          notesSection.appendChild(
+            el('div', { className: 'sublist-header' }, [
+              el('span', { className: 'field-label', textContent: 'Notes & Articles' }),
+              el('button', {
+                type: 'button',
+                className: 'mac-btn mac-btn-xs',
+                textContent: '+ Add Note',
+                onClick: () => {
+                  pushUndoSnapshot();
+                  block.items.push({
+                    category: 'NOTES',
+                    date: '2026-11-16',
+                    readTime: '5 MIN READ',
+                    title: 'New Note Title',
+                    summary: '',
+                    tags: [],
+                    buttonLabel: 'READ NOTE →',
+                    detailMode: 'inline',
+                    noteBody: '',
+                    target: ''
+                  });
+                  renderNotes();
+                  onSummaryChange();
+                  markChanged();
+                }
+              })
+            ])
+          );
+
+          block.items.forEach((note, idx) => {
+            if (!Array.isArray(note.tags)) note.tags = [];
+            notesSection.appendChild(
+              el('div', { className: 'sublist-item' }, [
+                el('div', { className: 'sublist-item-head' }, [
+                  el('span', { className: 'sublist-index', textContent: `NOTE #${idx + 1}` }),
+                  makeReorderControls(block.items, idx, () => {
+                    renderNotes();
+                    onSummaryChange();
+                  })
+                ]),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Category (Filter Key)', note.category, (v) => {
+                    pushUndoSnapshot(true);
+                    note.category = v;
+                    markChanged();
+                  }),
+                  makeTextField('Date', note.date, (v) => {
+                    pushUndoSnapshot(true);
+                    note.date = v;
+                    markChanged();
+                  }, { placeholder: '2026-10-18' }),
+                  makeTextField('Read Time', note.readTime, (v) => {
+                    pushUndoSnapshot(true);
+                    note.readTime = v;
+                    markChanged();
+                  }, { placeholder: '5 MIN READ' })
+                ]),
+                makeTextField('Note Title', note.title, (v) => {
+                  pushUndoSnapshot(true);
+                  note.title = v;
+                  markChanged();
+                }),
+                makeTextField('Card Summary', note.summary, (v) => {
+                  pushUndoSnapshot(true);
+                  note.summary = v;
+                  markChanged();
+                }, { multiline: true, rows: 2 }),
+                makeTagChipsEditor('Note Tags', note.tags, { defaultTag: 'Tag', addLabel: '+ Tag' }),
+                el('div', { className: 'field-grid-3' }, [
+                  makeTextField('Button Label', note.buttonLabel, (v) => {
+                    pushUndoSnapshot(true);
+                    note.buttonLabel = v;
+                    markChanged();
+                  }, { placeholder: 'READ NOTE →' }),
+                  makeSelectField('Detail Mode', note.detailMode || 'inline', [
+                    { value: 'inline', label: 'Inline Reader' },
+                    { value: 'url', label: 'External URL' }
+                  ], (v) => {
+                    pushUndoSnapshot();
+                    note.detailMode = v;
+                    markChanged();
+                  }),
+                  makeTextField('Target URL (for URL mode)', note.target, (v) => {
+                    pushUndoSnapshot(true);
+                    note.target = v;
+                    markChanged();
+                  }, { placeholder: 'https://...' })
+                ]),
+                makeTextField('Inline Note Body (Markdown-lite)', note.noteBody, (v) => {
+                  pushUndoSnapshot(true);
+                  note.noteBody = v;
+                  markChanged();
+                }, { multiline: true, rows: 5 })
+              ])
+            );
+          });
+        };
+        renderNotes();
+        container.appendChild(notesSection);
+        break;
+      }
+
       case 'custom_html': {
         container.appendChild(
           makeTextField('Block Heading (optional)', block.heading, (v) => {
@@ -1855,15 +2901,41 @@
   }
 
   function getBlockSummary(block) {
-    return (
-      block.heading ||
-      block.title ||
-      block.name ||
-      block.headerBar ||
-      block.email ||
-      block.id ||
-      ''
-    );
+    if (!block) return '';
+    switch (block.type) {
+      case 'cv_header':
+        return block.title || block.downloadLabel || block.id || '';
+      case 'cv_timeline': {
+        const count = Array.isArray(block.items) ? block.items.length : 0;
+        return `${block.heading || 'CV Timeline'} (${count} ${count === 1 ? 'entry' : 'entries'})`;
+      }
+      case 'skills_matrix': {
+        const mode = block.displayMode || 'both';
+        return `${block.heading || 'Skills Matrix'} [${mode}]`;
+      }
+      case 'project_showcase': {
+        const count = Array.isArray(block.items) ? block.items.length : 0;
+        return `${block.heading || 'Project Showcase'} (${count} ${count === 1 ? 'project' : 'projects'})`;
+      }
+      case 'publications_list': {
+        const count = Array.isArray(block.items) ? block.items.length : 0;
+        return `${block.heading || 'Publications'} (${count} ${count === 1 ? 'paper' : 'papers'})`;
+      }
+      case 'notes_list': {
+        const count = Array.isArray(block.items) ? block.items.length : 0;
+        return `${block.heading || 'Notes & Articles'} (${count} ${count === 1 ? 'note' : 'notes'})`;
+      }
+      default:
+        return (
+          block.heading ||
+          block.title ||
+          block.name ||
+          block.headerBar ||
+          block.email ||
+          block.id ||
+          ''
+        );
+    }
   }
 
   // ===================================================

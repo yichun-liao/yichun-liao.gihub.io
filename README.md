@@ -131,7 +131,7 @@ Inside `rich_text` paragraphs (and other markdown-lite fields rendered by `js/re
 - Newlines (`\n`) → `<br>`
 
 ### Supported Block Types (`blocks.<lang>[]`)
-Every block requires a unique `"id"` string and a `"type"` from the 8 built-in types below:
+Every block requires a unique `"id"` string and a `"type"` from the 14 built-in types below:
 
 1. **`hero_profile`** — System Profile header card with avatar, tags, and action buttons:
    ```json
@@ -271,6 +271,152 @@ Every block requires a unique `"id"` string and a `"type"` from the 8 built-in t
      "html": "<p>Custom HTML content goes here.</p>"
    }
    ```
+
+9. **`cv_header`** — CV title strip with status badge, primary PDF download button, and optional secondary link:
+   ```json
+   {
+     "id": "blk_cv_header",
+     "type": "cv_header",
+     "title": "Curriculum Vitae",
+     "subtitle": "Last Updated: November 2026 // Ph.D. Researcher, CU Boulder",
+     "statusBadge": "CV // PDF READY",
+     "downloadLabel": "DOWNLOAD CV (PDF)",
+     "downloadUrl": "/assets/YiChun_Liao_CV.pdf",
+     "downloadFilename": "YiChun_Liao_CV.pdf",
+     "openNewTab": true,
+     "secondaryLabel": "GOOGLE SCHOLAR ↗",
+     "secondaryUrl": "https://scholar.google.com/"
+   }
+   ```
+
+10. **`cv_timeline`** — Structured education & experience timeline with optional left vertical rail, period/location pills, and bullet highlights:
+    ```json
+    {
+      "id": "blk_cv_timeline",
+      "type": "cv_timeline",
+      "heading": "01 // Education & Research Experience",
+      "showTimelineRail": true,
+      "items": [
+        {
+          "title": "Ph.D. in Electrical & Computer Engineering",
+          "organization": "University of Colorado Boulder",
+          "period": "2023 – Present",
+          "location": "Boulder, CO, USA",
+          "badge": "CURRENT",
+          "summary": "Researching **safety-critical control** and **statistical system identification**.",
+          "bullets": [
+            "Developed data-driven Control Barrier Function (CBF) synthesis pipelines."
+          ]
+        }
+      ]
+    }
+    ```
+
+11. **`skills_matrix`** — Visual competency block supporting segmented retro progress bars (`0–100%`), grouped skill pills, or both (`displayMode`: `"bars"`, `"pills"`, or `"both"`):
+    ```json
+    {
+      "id": "blk_skills_matrix",
+      "type": "skills_matrix",
+      "heading": "02 // Technical Skills & Competencies",
+      "displayMode": "both",
+      "columns": 2,
+      "skillBars": [
+        {
+          "label": "Control Theory & CBFs",
+          "category": "THEORY",
+          "level": 92,
+          "note": "Safety filters, Lyapunov & barrier certificates"
+        }
+      ],
+      "skillGroups": [
+        {
+          "title": "Languages & Tooling",
+          "skills": ["Python", "MATLAB", "C++", "CasADi"]
+        }
+      ]
+    }
+    ```
+
+12. **`project_showcase`** — Filterable project grid (`columns`: `1`, `2`, or `3`) with inline expandable detail view (`"inline"`), external URL (`"url"`), or tab navigation (`"page"`):
+    ```json
+    {
+      "id": "blk_project_showcase",
+      "type": "project_showcase",
+      "heading": "Featured Engineering & Research Projects",
+      "filterLabel": "FILTER:",
+      "allLabel": "ALL",
+      "columns": 2,
+      "items": [
+        {
+          "category": "CONTROL",
+          "badge": "OPEN SOURCE",
+          "title": "Data-Driven Safety Filter Toolbox",
+          "summary": "Modular MATLAB & Python framework for synthesizing Control Barrier Functions.",
+          "tags": ["CBFs", "System ID", "QP"],
+          "buttonLabel": "INSPECT PROJECT →",
+          "detailMode": "inline",
+          "detailTitle": "Data-Driven Safety Filter Toolbox",
+          "detailMeta": "Category: Control // Status: Active",
+          "detailBody": "**Overview**\nConstructs provably safe quadratic-program safety filters from rollouts.",
+          "detailLinks": [
+            { "label": "GITHUB REPO ↗", "url": "https://github.com/yichun-liao" }
+          ],
+          "target": ""
+        }
+      ]
+    }
+    ```
+
+13. **`publications_list`** — Filterable academic citations by `pubType` (e.g., `JOURNAL`, `CONFERENCE`, `PREPRINT`) with highlighted authors, action pills, and collapsible BibTeX copy drawer:
+    ```json
+    {
+      "id": "blk_publications",
+      "type": "publications_list",
+      "heading": "Selected Publications & Preprints",
+      "filterLabel": "FILTER:",
+      "allLabel": "ALL",
+      "items": [
+        {
+          "pubType": "CONFERENCE",
+          "year": "2026",
+          "statusBadge": "UNDER REVIEW",
+          "authors": "**Yi-Chun Liao**, Co-Author Name",
+          "title": "Safety-Critical Control Synthesis via Statistical System Identification",
+          "venue": "IEEE Conference on Decision and Control (CDC)",
+          "bibtex": "@inproceedings{liao2026safety,\n  title={Safety-Critical Control Synthesis},\n  author={Liao, Yi-Chun},\n  year={2026}\n}",
+          "links": [
+            { "label": "ARXIV ↗", "url": "https://arxiv.org/" }
+          ]
+        }
+      ]
+    }
+    ```
+
+14. **`notes_list`** — Filterable technical notes & articles grid (`columns`: `1`, `2`, or `3`) with reading time, tags, and inline reader (`detailMode`: `"inline"`) or external link (`"url"`):
+    ```json
+    {
+      "id": "blk_notes_list",
+      "type": "notes_list",
+      "heading": "Technical Notes & Field Logs",
+      "filterLabel": "FILTER:",
+      "allLabel": "ALL",
+      "columns": 2,
+      "items": [
+        {
+          "category": "CONTROL",
+          "date": "2026-10-18",
+          "readTime": "6 MIN READ",
+          "title": "Intuition Behind Control Barrier Functions",
+          "summary": "A concise walkthrough of forward invariance and QP-based safety filters.",
+          "tags": ["CBFs", "Safety"],
+          "buttonLabel": "READ NOTE →",
+          "detailMode": "inline",
+          "noteBody": "**Why Barrier Functions?**\nDetailed markdown-lite article body goes here.",
+          "target": ""
+        }
+      ]
+    }
+    ```
 
 ---
 

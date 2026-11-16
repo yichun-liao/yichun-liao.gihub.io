@@ -949,15 +949,585 @@ body, html {
   margin: 0;
 }
 
+/* ===================================================
+   EXTENDED CMS BLOCKS (CV, SKILLS, PROJECTS, PUBS, NOTES)
+=================================================== */
+
+.mac-hidden,
+.mac-blocks-container [hidden] {
+  display: none !important;
+}
+
+.mac-inline-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  background: #f4f0e6;
+  border: 1px solid #000;
+  padding: 0 4px;
+}
+
+.mac-timeline-summary a,
+.mac-timeline-bullets a,
+.mac-skill-note a,
+.mac-pub-venue a,
+.mac-detail-body a {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Shared Filter Bar */
+.mac-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  border: 2px solid #000;
+  background: #f4f0e6;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.mac-filter-label {
+  font-family: 'VT323', monospace;
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  color: #000;
+  margin-right: 2px;
+}
+
+.mac-filter-btn {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 2px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.1s ease, color 0.1s ease;
+}
+
+.mac-filter-btn:hover,
+.mac-filter-btn.is-active {
+  background: #000;
+  color: #fff;
+}
+
+/* 1. CV Header & Download Strip */
+.mac-cv-header {
+  border: 3px solid #000;
+  background: #ffffff;
+  box-shadow: 5px 5px 0px #000;
+  padding: 18px 20px;
+}
+
+.mac-cv-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mac-cv-header-meta {
+  flex: 1;
+  min-width: 200px;
+}
+
+.mac-cv-header-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.mac-cv-header-subtitle {
+  font-family: 'VT323', monospace;
+  font-size: 1.08rem;
+  color: #444;
+}
+
+.mac-cv-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 2px dashed #000;
+}
+
+.mac-cv-download-btn svg {
+  flex-shrink: 0;
+}
+
+/* 2. CV Timeline */
+.mac-timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mac-timeline-list.has-rail {
+  position: relative;
+  padding-left: 26px;
+}
+
+.mac-timeline-list.has-rail::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: #000;
+}
+
+.mac-timeline-item {
+  position: relative;
+}
+
+.mac-timeline-dot {
+  position: absolute;
+  left: -26px;
+  top: 16px;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+}
+
+.mac-timeline-item:first-child .mac-timeline-dot {
+  background: #000000;
+}
+
+.mac-timeline-card {
+  border: 2px solid #000;
+  background: #fafafa;
+  box-shadow: 3px 3px 0px #000;
+  padding: 14px 16px;
+}
+
+.mac-timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mac-timeline-title {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.mac-timeline-org {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #444;
+  margin-top: 2px;
+}
+
+.mac-timeline-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.mac-cv-pill {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  background: #f4f0e6;
+  border: 1px solid #000;
+  padding: 1px 8px;
+  color: #000;
+  display: inline-block;
+}
+
+.mac-timeline-summary {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.mac-timeline-bullets {
+  margin: 6px 0 0 18px;
+  padding: 0;
+  list-style: square;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* 3. Skills Matrix */
+.mac-skills-matrix-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mac-skills-bars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.mac-skill-bar-card {
+  border: 2px solid #000;
+  background: #fafafa;
+  box-shadow: 3px 3px 0px #000;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mac-skill-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mac-skill-label {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.mac-skill-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mac-skill-pct {
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #000;
+  min-width: 36px;
+  text-align: right;
+}
+
+.mac-skill-meter {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  border: 2px solid #000;
+  background: #ffffff;
+  padding: 3px;
+}
+
+.mac-skill-seg {
+  height: 12px;
+  background: #eae4d5;
+  border: 1px solid #c4bdb0;
+}
+
+.mac-skill-seg.is-filled {
+  background: #000000;
+  border-color: #000000;
+}
+
+.mac-skill-note {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #333;
+  margin: 0;
+}
+
+.mac-skill-group-card {
+  gap: 10px;
+}
+
+/* 4 & 6. Project Showcase & Notes Inline Reader */
+.mac-card-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.mac-card-category {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #444;
+  background: #f4f0e6;
+  border: 1px solid #000;
+  padding: 1px 6px;
+}
+
+.mac-note-meta-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mac-note-meta-item {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.mac-showcase-detail-view {
+  border: 2px solid #000;
+  background: #ffffff;
+  box-shadow: 4px 4px 0px #000;
+  padding: 18px 20px;
+}
+
+.mac-detail-topbar {
+  border-bottom: 2px dashed #000;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.mac-detail-header {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #000;
+}
+
+.mac-detail-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mac-detail-meta {
+  font-family: 'VT323', monospace;
+  font-size: 1.05rem;
+  color: #444;
+  text-transform: uppercase;
+}
+
+.mac-detail-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+
+.mac-detail-body {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #222;
+}
+
+.mac-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 2px dashed #000;
+}
+
+/* 5. Publications List & BibTeX Drawer */
+.mac-publications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mac-pub-card {
+  border: 2px solid #000;
+  background: #fafafa;
+  box-shadow: 3px 3px 0px #000;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mac-pub-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mac-pub-meta-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mac-pub-type-pill {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 1px 7px;
+  text-transform: uppercase;
+}
+
+.mac-pub-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.mac-pub-authors {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #222;
+}
+
+.mac-pub-authors strong {
+  background: #f4f0e6;
+  border-bottom: 2px solid #000;
+  padding: 0 3px;
+  color: #000;
+}
+
+.mac-pub-venue {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.mac-pub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.mac-pub-pill-btn {
+  background: #ffffff;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+  padding: 2px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.1s ease;
+}
+
+.mac-pub-pill-btn:hover,
+.mac-pub-pill-btn.is-open {
+  background: #000;
+  color: #fff;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.mac-bibtex-drawer {
+  margin-top: 6px;
+  border: 2px solid #000;
+  background: #ffffff;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.mac-bibtex-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  padding: 4px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+}
+
+.mac-bibtex-copy-btn {
+  background: #ffffff;
+  color: #000;
+  border: 1px solid #ffffff;
+  padding: 1px 8px;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mac-bibtex-copy-btn:hover {
+  background: #eae4d5;
+}
+
+.mac-bibtex-pre {
+  margin: 0;
+  padding: 10px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  overflow-x: auto;
+  background: #f4f0e6;
+  color: #000;
+  user-select: text;
+}
+
+.mac-bibtex-pre code {
+  user-select: text;
+}
+
 @media (max-width: 640px) {
   .about-bento-grid,
   .about-highlight-grid,
+  .mac-skills-bars-grid,
   .mac-cols-2,
   .mac-cols-3 {
     grid-template-columns: 1fr !important;
   }
-  .about-hero-card {
+  .about-hero-card,
+  .mac-cv-header,
+  .mac-showcase-detail-view {
     padding: 14px;
+  }
+  .mac-cv-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mac-cv-header-actions .about-btn {
+    justify-content: center;
+  }
+  .mac-timeline-list.has-rail {
+    padding-left: 20px;
+  }
+  .mac-timeline-dot {
+    left: -20px;
+    width: 12px;
+    height: 12px;
+  }
+  .mac-timeline-list.has-rail::before {
+    left: 5px;
+  }
+  .mac-filter-bar {
+    gap: 6px;
+    padding: 8px;
   }
 }
 
