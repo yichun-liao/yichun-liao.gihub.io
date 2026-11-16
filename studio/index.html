@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PORTFOLIO_STUDIO.APP // Visual CMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/studio/studio.css?v=1">
+</head>
+<body>
+  <div class="studio-shell">
+    <!-- Retro 1984 Macintosh Top Toolbar -->
+    <header class="studio-toolbar">
+      <div class="toolbar-group toolbar-brand">
+        <span class="mac-apple-badge" aria-hidden="true">■</span>
+        <span class="brand-title">PORTFOLIO_STUDIO.APP</span>
+        <span id="connection-badge" class="status-pill status-checking" title="Save backend status">Checking API...</span>
+        <span id="dirty-badge" class="status-pill status-clean">Saved</span>
+      </div>
+
+      <div class="toolbar-group toolbar-lang">
+        <span class="toolbar-label">LANG:</span>
+        <div class="segmented-control" role="group" aria-label="Editing Language">
+          <button type="button" class="seg-btn active" data-lang="en">EN</button>
+          <button type="button" class="seg-btn" data-lang="zh_hant">繁體中文</button>
+          <button type="button" class="seg-btn" data-lang="zh_hans">简体中文</button>
+        </div>
+        <button type="button" id="btn-copy-from-en" class="mac-btn mac-btn-sm" title="Copy blocks from English into the active language for this tab">Copy Blocks from EN</button>
+      </div>
+
+      <div class="toolbar-group toolbar-actions">
+        <button type="button" id="btn-undo" class="mac-btn mac-btn-sm" title="Undo last change (Ctrl+Z)" disabled>Undo</button>
+        <button type="button" id="btn-reload" class="mac-btn mac-btn-sm" title="Reload content from disk">Reload from Disk</button>
+        <button type="button" id="btn-link-file" class="mac-btn mac-btn-sm" title="Link local data/site-content.json via File System Access API">Link Local File</button>
+        <button type="button" id="btn-export-json" class="mac-btn mac-btn-sm" title="Download site-content.json">Export JSON</button>
+        <button type="button" id="btn-save" class="mac-btn mac-btn-primary" title="Save changes (Ctrl+S)">Save Changes</button>
+        <button type="button" id="btn-toggle-preview" class="mac-btn mac-btn-sm active" title="Show or hide live preview pane">Preview: ON</button>
+        <a id="btn-open-live" class="mac-btn mac-btn-sm" href="/" target="_blank" rel="noopener noreferrer">Open Live Site ↗</a>
+      </div>
+    </header>
+
+    <!-- Main 3-Pane Studio Workspace -->
+    <main id="studio-workspace" class="studio-workspace">
+      <!-- Left Sidebar: Tabs & Menu Manager -->
+      <aside class="studio-pane pane-sidebar" aria-label="Tabs and Menu Manager">
+        <section class="sidebar-section">
+          <div class="pane-header">
+            <h2 class="pane-title">TABS</h2>
+            <button type="button" id="btn-open-new-tab" class="mac-btn mac-btn-xs mac-btn-primary">+ Add New Tab</button>
+          </div>
+          <div id="tabs-list" class="tabs-list"></div>
+        </section>
+
+        <section class="sidebar-section sidebar-menu-section">
+          <div class="pane-header">
+            <h2 class="pane-title">TOP MENU BAR</h2>
+            <button type="button" id="btn-add-menu-link" class="mac-btn mac-btn-xs">+ Add Link</button>
+          </div>
+          <div id="menu-links-list" class="menu-links-list"></div>
+        </section>
+      </aside>
+
+      <!-- Center Pane: Selected Tab & Blocks Editor -->
+      <section class="studio-pane pane-editor" aria-label="Tab Content Editor">
+        <div id="editor-root" class="editor-root">
+          <div class="empty-state">Loading site-content.json...</div>
+        </div>
+      </section>
+
+      <!-- Right Pane: Toggleable Live Preview -->
+      <aside id="preview-pane" class="studio-pane pane-preview" aria-label="Live Site Preview">
+        <div class="pane-header preview-header">
+          <div class="preview-header-left">
+            <span class="mac-stripes" aria-hidden="true"></span>
+            <h2 class="pane-title">LIVE PREVIEW</h2>
+            <span id="preview-route-label" class="preview-route-pill">/?studio_preview=1</span>
+          </div>
+          <div class="preview-header-actions">
+            <button type="button" id="btn-preview-mode" class="mac-btn mac-btn-xs" title="Switch between previewing the selected tab and the desktop circle view">View: Tab</button>
+            <button type="button" id="btn-refresh-preview" class="mac-btn mac-btn-xs" title="Reload preview iframe">↻ Reload</button>
+            <button type="button" id="btn-close-preview" class="mac-btn mac-btn-xs" title="Hide preview pane">Hide</button>
+          </div>
+        </div>
+        <div class="preview-frame-wrap">
+          <iframe id="preview-iframe" src="/?studio_preview=1" title="Portfolio Live Preview"></iframe>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Toast Notification Area -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  </div>
+
+  <!-- Modal: Add New Tab -->
+  <div id="new-tab-modal" class="mac-modal-backdrop" hidden>
+    <div class="mac-modal" role="dialog" aria-modal="true" aria-labelledby="new-tab-modal-title">
+      <div class="mac-modal-header">
+        <span id="new-tab-modal-title" class="mac-modal-title">NEW_TAB_WIZARD.EXE</span>
+        <button type="button" id="btn-close-new-tab-modal" class="mac-btn mac-btn-xs">CLOSE [X]</button>
+      </div>
+      <form id="new-tab-form" class="mac-modal-body">
+        <div class="field-grid-2">
+          <label class="field">
+            <span class="field-label">Tab ID (URL slug)</span>
+            <input type="text" id="new-tab-id" class="mac-input" placeholder="e.g. publications" required pattern="[a-z0-9_-]+" />
+            <span class="field-hint">Lowercase letters, numbers, hyphens, underscores.</span>
+          </label>
+          <label class="field">
+            <span class="field-label">English Label</span>
+            <input type="text" id="new-tab-label-en" class="mac-input" placeholder="e.g. Publications" required />
+          </label>
+          <label class="field">
+            <span class="field-label">繁體中文 Label</span>
+            <input type="text" id="new-tab-label-hant" class="mac-input" placeholder="e.g. 發表著作" />
+          </label>
+          <label class="field">
+            <span class="field-label">简体中文 Label</span>
+            <input type="text" id="new-tab-label-hans" class="mac-input" placeholder="e.g. 发表著作" />
+          </label>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Desktop Icon (12 Retro Pixel Icons)</span>
+          <div id="new-tab-icon-grid" class="icon-picker-grid"></div>
+        </div>
+
+        <div class="field-row-checks">
+          <label class="check-label">
+            <input type="checkbox" id="new-tab-show-desktop" checked />
+            <span>Show on Desktop</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" id="new-tab-is-center" />
+            <span>Set as Center Button</span>
+          </label>
+        </div>
+
+        <div id="new-tab-error" class="form-error" hidden></div>
+
+        <div class="mac-modal-footer">
+          <button type="button" id="btn-cancel-new-tab" class="mac-btn">Cancel</button>
+          <button type="submit" class="mac-btn mac-btn-primary">Create Tab</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Action -->
+  <div id="confirm-modal" class="mac-modal-backdrop" hidden>
+    <div class="mac-modal mac-modal-sm" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+      <div class="mac-modal-header">
+        <span id="confirm-modal-title" class="mac-modal-title">CONFIRM.SYS</span>
+      </div>
+      <div class="mac-modal-body">
+        <p id="confirm-modal-message" class="confirm-message"></p>
+        <div class="mac-modal-footer">
+          <button type="button" id="btn-confirm-cancel" class="mac-btn">Cancel</button>
+          <button type="button" id="btn-confirm-ok" class="mac-btn mac-btn-danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/studio/studio.js?v=1"></script>
+</body>
+</html>

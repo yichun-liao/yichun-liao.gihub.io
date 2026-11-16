@@ -1,9 +1,8 @@
 /* ===================================================
-   UI INTERACTION, MULTI-LANG ROUTING & ASYNC FETCHING
-   (Optimized Idle-Stop rAF & Welcome Card Support)
+   UI INTERACTION, DATA-DRIVEN CMS RENDERING & ROUTING
+   (Optimized Idle-Stop rAF & Studio Live Preview)
 =================================================== */
 
-// 💡 動態 Getters 防範 <script> 於 <head> 載入時取得 null
 const getEl = (id) => document.getElementById(id);
 
 const elements = {
@@ -11,26 +10,32 @@ const elements = {
   get pagesContainer() { return getEl('pages-container'); },
   get windowContent() { return getEl('window-content'); },
   get desktopArea() { return getEl('desktop-area'); },
-  get windowTitleText() { return getEl('window-title-text'); }
+  get windowTitleText() { return getEl('window-title-text'); },
+  get menuLeft() { return document.querySelector('.menu-left'); }
 };
 
-// 🌐 語言狀態管理：100% 依據 URL 路徑，網址沒有語系就預設為英文 'en'
+const isStudioPreview = (() => {
+  try {
+    return new URLSearchParams(window.location.search).get('studio_preview') === '1';
+  } catch (e) {
+    return false;
+  }
+})();
+
+// 🌐 語言狀態管理：依據 URL 路徑決定初始語系
 function getInitialLang() {
   const path = window.location.pathname;
-
   if (path.includes('/zh-hant')) return 'zh_hant';
   if (path.includes('/zh-hans')) return 'zh_hans';
-
   return 'en';
 }
 
 let currentLang = getInitialLang();
 let activePageId = null;
+let siteContent = null;
+let previewMessageReceived = false;
 let cachedCenterBtn = null;
 let cachedRingButtons = [];
-let currentFetchController = null;
-
-// 快取 desktopRect
 let cachedDesktopRect = null;
 
 function getDesktopRect() {
@@ -48,9 +53,90 @@ window.addEventListener('resize', () => {
 });
 window.addEventListener('scroll', () => { cachedDesktopRect = null; }, true);
 
+function resolveIconSvg(iconName) {
+  if (typeof MAC_ICONS !== 'undefined' && iconName && MAC_ICONS[iconName]) {
+    return MAC_ICONS[iconName];
+  }
+  if (typeof MAC_ICONS !== 'undefined') {
+    return MAC_ICONS.about || '';
+  }
+  return '';
+}
+
 function getTranslation(key) {
   if (typeof TRANSLATIONS === 'undefined') return key;
   return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS['en']?.[key] || key;
+}
+
+function syncGlobalsFromContent(content) {
+  const nextTranslations = { en: {}, zh_hant: {}, zh_hans: {} };
+  const tabs = Array.isArray(content?.tabs) ? content.tabs : [];
+
+  const nextPages = tabs.map((tab) => {
+    const labels = tab.labels || {};
+    ['en', 'zh_hant', 'zh_hans'].forEach((loc) => {
+      nextTranslations[loc][tab.id] = labels[loc] || labels.en || tab.id;
+    });
+
+    return {
+      id: tab.id,
+      iconKey: tab.icon || 'about',
+      icon: resolveIconSvg(tab.icon),
+      isCenter: Boolean(tab.isCenter),
+      showInDesktop: tab.showInDesktop !== false,
+      labels,
+      pageTitle: tab.pageTitle || {},
+      blocks: tab.blocks || {}
+    };
+  });
+
+  if (typeof TRANSLATIONS !== 'undefined') {
+    TRANSLATIONS.en = nextTranslations.en;
+    TRANSLATIONS.zh_hant = nextTranslations.zh_hant;
+    TRANSLATIONS.zh_hans = nextTranslations.zh_hans;
+  } else {
+    window.TRANSLATIONS = nextTranslations;
+  }
+
+  PAGES = nextPages;
+  window.PAGES = nextPages;
+}
+
+function renderMenuBar() {
+  const menuLeft = elements.menuLeft;
+  const menuLinks = siteContent?.site?.menuLinks;
+  if (!menuLeft || !Array.isArray(menuLinks)) return;
+
+  menuLeft.innerHTML = '';
+
+  menuLinks.forEach((item) => {
+    if (!item) return;
+    const span = document.createElement('span');
+    span.className = 'menu-item';
+    if (item.id) span.id = item.id;
+    if (item.bold) span.style.fontWeight = 'bold';
+
+    const labelText = item.labels?.[currentLang] || item.labels?.en || item.id || '';
+    span.textContent = labelText;
+
+    span.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (item.action === 'home') {
+        goHome(true);
+      } else if (item.action === 'page' && item.pageId) {
+        window.openPortfolioPage(item.pageId);
+      } else if (item.action === 'url' && item.url) {
+        const href = String(item.url).trim();
+        if (/^https?:\/\//i.test(href)) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        } else if (href.startsWith('/')) {
+          window.location.href = href;
+        }
+      }
+    });
+
+    menuLeft.appendChild(span);
+  });
 }
 
 // 渲染桌面圓形按鈕
@@ -61,28 +147,32 @@ function renderUI() {
   cachedCenterBtn = null;
   cachedRingButtons = [];
 
-  if (typeof PAGES === 'undefined') return;
+  if (typeof PAGES === 'undefined' || !Array.isArray(PAGES)) return;
 
-  const ringPages = PAGES.filter((p) => p.id !== 'about');
-  const totalRing = ringPages.length;
+  const desktopTabs = PAGES.filter((p) => p.showInDesktop !== false);
+  const centerTab = desktopTabs.find((p) => p.isCenter) || null;
+  const ringTabs = desktopTabs.filter((p) => p !== centerTab);
+  const totalRing = ringTabs.length;
   let ringIndex = 0;
 
-  PAGES.forEach((page) => {
+  desktopTabs.forEach((page) => {
     const btn = document.createElement('a');
 
-    // 💡 採用 URLSearchParams 安全組合網址參數，避免雙問號 Bug
+    // 採用 URLSearchParams 安全組合網址參數
     const url = new URL(window.location.href);
     url.searchParams.set('page', page.id);
     btn.href = `${url.pathname}?${url.searchParams.toString()}`;
 
-    const isCenter = page.id === 'about';
+    const isCenter = page === centerTab;
     const pageLabel = getTranslation(page.id);
 
     if (isCenter) {
       btn.className = 'circle-btn center-btn label-bottom';
       cachedCenterBtn = btn;
     } else {
-      const angle = (ringIndex / totalRing) * Math.PI * 2 - (Math.PI / 2);
+      const angle = totalRing > 0
+        ? (ringIndex / totalRing) * Math.PI * 2 - (Math.PI / 2)
+        : 0;
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
       const labelSideClass = cos < -0.01 ? 'label-left' : 'label-right';
@@ -93,10 +183,17 @@ function renderUI() {
     }
 
     btn.dataset.id = page.id;
-    btn.innerHTML = `
-      <div class="icon">${page.icon}</div>
-      <span class="label">${pageLabel}</span>
-    `;
+
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'icon';
+    iconDiv.innerHTML = page.icon;
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'label';
+    labelSpan.textContent = pageLabel;
+
+    btn.appendChild(iconDiv);
+    btn.appendChild(labelSpan);
 
     // 允許 Ctrl/Cmd/中鍵 開啟新分頁
     btn.onclick = (e) => {
@@ -114,6 +211,45 @@ function renderUI() {
   positionButtons(true);
 }
 
+function applySiteContent(content) {
+  if (!content || typeof content !== 'object') return;
+  siteContent = content;
+  syncGlobalsFromContent(content);
+  renderMenuBar();
+  renderUI();
+}
+
+async function loadSiteContent() {
+  if (isStudioPreview) {
+    try {
+      const draftRaw = localStorage.getItem('studio_draft_content');
+      if (draftRaw) {
+        const draft = JSON.parse(draftRaw);
+        if (draft && Array.isArray(draft.tabs)) {
+          applySiteContent(draft);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not parse studio_draft_content, falling back to JSON file:', e);
+    }
+  }
+
+  try {
+    const response = await fetch('/data/site-content.json', { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!previewMessageReceived) {
+      applySiteContent(data);
+    }
+  } catch (error) {
+    console.error('Failed to load /data/site-content.json:', error);
+    renderUI();
+  }
+}
+
 // 🌐 下拉選單觸發語言切換
 window.changeLanguage = function (selectedLang) {
   currentLang = selectedLang;
@@ -125,40 +261,42 @@ window.changeLanguage = function (selectedLang) {
     document.cookie = `site_lang=${currentLang}; path=/; max-age=31536000; SameSite=Lax`;
   } catch (e) { /* ignore storage error */ }
 
-  const currentPath = window.location.pathname;
-  const currentSearch = window.location.search;
+  if (!isStudioPreview) {
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search;
+    const normalizedPath = currentPath.replace(/\/index\.html$/, '').replace(/\/$/, '');
+    const isHomePage = ['', '/zh-hant', '/zh-hans'].includes(normalizedPath);
 
-  const normalizedPath = currentPath.replace(/\/index\.html$/, '').replace(/\/$/, '');
-  const isHomePage = ['', '/zh-hant', '/zh-hans'].includes(normalizedPath);
+    if (isHomePage) {
+      let targetUrl = '';
+      if (selectedLang === 'zh_hant' && !currentPath.includes('/zh-hant')) {
+        targetUrl = `/zh-hant/${currentSearch}`;
+      } else if (selectedLang === 'zh_hans' && !currentPath.includes('/zh-hans')) {
+        targetUrl = `/zh-hans/${currentSearch}`;
+      } else if (selectedLang === 'en' && (currentPath.includes('/zh-hant') || currentPath.includes('/zh-hans'))) {
+        targetUrl = `/${currentSearch}`;
+      }
 
-  if (isHomePage) {
-    let targetUrl = '';
-    if (selectedLang === 'zh_hant' && !currentPath.includes('/zh-hant')) {
-      targetUrl = `/zh-hant/${currentSearch}`;
-    } else if (selectedLang === 'zh_hans' && !currentPath.includes('/zh-hans')) {
-      targetUrl = `/zh-hans/${currentSearch}`;
-    } else if (selectedLang === 'en' && (currentPath.includes('/zh-hant') || currentPath.includes('/zh-hans'))) {
-      targetUrl = `/${currentSearch}`;
+      if (targetUrl) {
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 0);
+        return;
+      }
+    } else {
+      const cleanPath = currentPath.replace(/^\/(zh-hant|zh-hans)/, '');
+      let newPath = cleanPath;
+      if (selectedLang === 'zh_hant') newPath = `/zh-hant${cleanPath}`;
+      else if (selectedLang === 'zh_hans') newPath = `/zh-hans${cleanPath}`;
+
+      history.pushState({ pageId: activePageId }, '', `${newPath}${currentSearch}`);
     }
-
-    if (targetUrl) {
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 0);
-      return;
-    }
-  } else {
-    const cleanPath = currentPath.replace(/^\/(zh-hant|zh-hans)/, '');
-    let newPath = cleanPath;
-    if (selectedLang === 'zh_hant') newPath = `/zh-hant${cleanPath}`;
-    else if (selectedLang === 'zh_hans') newPath = `/zh-hans${cleanPath}`;
-
-    history.pushState({ pageId: activePageId }, '', `${newPath}${currentSearch}`);
   }
 
+  renderMenuBar();
   renderUI();
 
-  if (activePageId && typeof PAGES !== 'undefined') {
+  if (activePageId && Array.isArray(PAGES)) {
     const currentPage = PAGES.find((p) => p.id === activePageId);
     if (currentPage) loadAndOpenPage(currentPage, false);
   }
@@ -166,103 +304,72 @@ window.changeLanguage = function (selectedLang) {
 
 // 全域頁面導航輔助函式（供頁面內按鈕呼叫）
 window.openPortfolioPage = function (pageId) {
-  if (typeof PAGES === 'undefined') return;
+  if (!Array.isArray(PAGES)) return;
   const targetPage = PAGES.find((p) => p.id === pageId);
   if (targetPage) loadAndOpenPage(targetPage);
 };
 
-// 非同步加載與開啟頁面
-async function loadAndOpenPage(page, pushHistory = true) {
-  // 觸發舊頁面的清理鉤子（若有的話）
+// 由 JSON 資料渲染並開啟頁面
+function loadAndOpenPage(page, pushHistory = true, preserveScroll = false) {
+  if (!page) return;
+
   if (typeof window.onPageUnmount === 'function') {
     try { window.onPageUnmount(); } catch (e) { console.error('Unmount error:', e); }
     window.onPageUnmount = null;
   }
 
-  if (currentFetchController) {
-    currentFetchController.abort();
+  const prevScrollTop = preserveScroll && elements.pagesContainer ? elements.pagesContainer.scrollTop : 0;
+
+  activePageId = page.id;
+  if (animFrameId) {
+    cancelAnimationFrame(animFrameId);
+    animFrameId = null;
   }
-  currentFetchController = new AbortController();
 
-  try {
-    activePageId = page.id;
-    if (animFrameId) {
-      cancelAnimationFrame(animFrameId);
-      animFrameId = null;
+  const pageLabel = getTranslation(page.id);
+  const pageTitle = page.pageTitle?.[currentLang] || page.pageTitle?.en || pageLabel;
+
+  if (elements.windowTitleText) {
+    elements.windowTitleText.innerText = `PORTFOLIO_VIEWER.EXE // ${pageLabel.toUpperCase()}`;
+  }
+
+  elements.windowContent?.classList.add('active');
+  elements.floatingContainer?.classList.add('is-hidden');
+
+  if (elements.pagesContainer) {
+    const localeBlocks = page.blocks && Array.isArray(page.blocks[currentLang]) && page.blocks[currentLang].length > 0
+      ? page.blocks[currentLang]
+      : (page.blocks?.en || []);
+
+    if (window.SiteRenderer && typeof window.SiteRenderer.renderBlocks === 'function') {
+      elements.pagesContainer.innerHTML = window.SiteRenderer.renderBlocks(localeBlocks, pageTitle);
+    } else {
+      elements.pagesContainer.innerHTML = '<div style="padding:20px; text-align:center;">Renderer unavailable.</div>';
     }
 
-    const pageLabel = getTranslation(page.id);
+    elements.pagesContainer.scrollTop = preserveScroll ? prevScrollTop : 0;
 
-    if (elements.windowTitleText) {
-      elements.windowTitleText.innerText = `PORTFOLIO_VIEWER.EXE // ${pageLabel.toUpperCase()}`;
-    }
-
-    if (elements.pagesContainer) {
-      elements.pagesContainer.innerHTML = '<div style="padding:20px; text-align:center;">Loading content...</div>';
-    }
-
-    elements.windowContent?.classList.add('active');
-    elements.floatingContainer?.classList.add('is-hidden');
-
-    const filePath = `/pages/${currentLang}/${page.id}.html`;
-
-    const response = await fetch(filePath, {
-      signal: currentFetchController.signal,
-      headers: { 'Accept-Language': currentLang }
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const htmlContent = await response.text();
-
-    if (activePageId !== page.id) return;
-
-    if (elements.pagesContainer) {
-      elements.pagesContainer.innerHTML = htmlContent;
-      elements.pagesContainer.scrollTop = 0;
-
-      const oldScripts = Array.from(elements.pagesContainer.querySelectorAll('script'));
-      for (const oldScript of oldScripts) {
-        const newScript = document.createElement('script');
-        Array.from(oldScript.attributes).forEach((attr) => newScript.setAttribute(attr.name, attr.value));
-
-        if (oldScript.src) {
-          await new Promise((resolve, reject) => {
-            newScript.onload = resolve;
-            newScript.onerror = () => reject(new Error(`Failed to load script: ${oldScript.src}`));
-            newScript.src = oldScript.src;
-            oldScript.parentNode.replaceChild(newScript, oldScript);
-          });
-        } else {
-          // 💡 將行內腳本包裹在 IIFE 中，避免二次開啟頁面時 const/let 變數重複宣告崩潰
-          newScript.textContent = `(function(){\n${oldScript.textContent}\n})();`;
-          oldScript.parentNode.replaceChild(newScript, oldScript);
-        }
+    // 執行 custom_html 中可能內含的腳本
+    const oldScripts = Array.from(elements.pagesContainer.querySelectorAll('script'));
+    for (const oldScript of oldScripts) {
+      const newScript = document.createElement('script');
+      Array.from(oldScript.attributes).forEach((attr) => newScript.setAttribute(attr.name, attr.value));
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+      } else {
+        newScript.textContent = `(function(){\n${oldScript.textContent}\n})();`;
+        oldScript.parentNode.replaceChild(newScript, oldScript);
       }
     }
+  }
 
-    if (pushHistory) {
-      const url = new URL(window.location.href);
-      url.searchParams.set('page', page.id);
-      if (window.location.search !== `?${url.searchParams.toString()}`) {
-        history.pushState({ pageId: page.id }, '', `${url.pathname}?${url.searchParams.toString()}`);
-      }
+  if (pushHistory) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', page.id);
+    if (window.location.search !== `?${url.searchParams.toString()}`) {
+      history.pushState({ pageId: page.id }, '', `${url.pathname}?${url.searchParams.toString()}`);
     }
-  } catch (error) {
-    if (error.name === 'AbortError') return;
-    if (activePageId !== page.id) return;
-
-    console.error('Error loading page:', error);
-    if (elements.pagesContainer) {
-      elements.pagesContainer.innerHTML = `
-        <h2 class="page-title">Error Loading Page</h2>
-        <div class="page-body">
-          <p>Could not fetch file: <code>/pages/${currentLang}/${page.id}.html</code>.</p>
-          <p>Please check if the file exists in the directory.</p>
-        </div>
-      `;
-    }
-  } finally {
-    currentFetchController = null;
   }
 }
 
@@ -270,15 +377,9 @@ async function loadAndOpenPage(page, pushHistory = true) {
 function goHome(pushHistory = true) {
   const shouldPush = typeof pushHistory === 'boolean' ? pushHistory : true;
 
-  // 觸發舊頁面的清理鉤子
   if (typeof window.onPageUnmount === 'function') {
     try { window.onPageUnmount(); } catch (e) { console.error('Unmount error:', e); }
     window.onPageUnmount = null;
-  }
-
-  if (currentFetchController) {
-    currentFetchController.abort();
-    currentFetchController = null;
   }
 
   activePageId = null;
@@ -376,30 +477,65 @@ function startAnimationOnce() {
   }
 }
 
-// 初始化應用程式
-function initApp() {
-  elements.desktopArea?.addEventListener('mousemove', handleMouseMove, { passive: true });
+// Studio 即時預覽 postMessage 監聽
+window.addEventListener('message', (event) => {
+  if (!isStudioPreview) return;
+  if (event.origin !== window.location.origin && event.origin !== 'null') return;
 
-  getEl('menu-home')?.addEventListener('click', (e) => { e.preventDefault(); goHome(true); });
+  const payload = event.data;
+  if (!payload || payload.type !== 'STUDIO_PREVIEW_UPDATE') return;
+
+  previewMessageReceived = true;
+
+  if (payload.lang && ['en', 'zh_hant', 'zh_hans'].includes(payload.lang)) {
+    currentLang = payload.lang;
+  }
+
+  if (payload.content && Array.isArray(payload.content.tabs)) {
+    applySiteContent(payload.content);
+  } else {
+    renderMenuBar();
+    renderUI();
+  }
+
+  if (Object.prototype.hasOwnProperty.call(payload, 'activePageId')) {
+    if (payload.activePageId) {
+      const targetPage = PAGES.find((p) => p.id === payload.activePageId);
+      if (targetPage) {
+        const samePage = activePageId === targetPage.id;
+        loadAndOpenPage(targetPage, false, samePage);
+      } else {
+        goHome(false);
+      }
+    } else {
+      goHome(false);
+    }
+  } else if (activePageId) {
+    const currentPage = PAGES.find((p) => p.id === activePageId);
+    if (currentPage) {
+      loadAndOpenPage(currentPage, false, true);
+    }
+  }
+});
+
+// 初始化應用程式
+async function initApp() {
+  if (isStudioPreview) {
+    const webgl = getEl('webgl-container');
+    const macOs = getEl('mac-os');
+    if (webgl) webgl.style.display = 'none';
+    if (macOs) macOs.classList.add('active');
+  }
+
+  elements.desktopArea?.addEventListener('mousemove', handleMouseMove, { passive: true });
   getEl('close-window-btn')?.addEventListener('click', (e) => { e.preventDefault(); goHome(true); });
 
-  getEl('menu-cv')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (typeof PAGES !== 'undefined') {
-      const cvPage = PAGES.find((p) => p.id === 'cv');
-      if (cvPage) loadAndOpenPage(cvPage);
-    }
-  });
+  // 靜態 HTML 選單後備綁定（在 JSON 載入完成前即生效）
+  getEl('menu-home')?.addEventListener('click', (e) => { e.preventDefault(); goHome(true); });
+  getEl('menu-cv')?.addEventListener('click', (e) => { e.preventDefault(); window.openPortfolioPage('cv'); });
+  getEl('menu-contact')?.addEventListener('click', (e) => { e.preventDefault(); window.openPortfolioPage('contact'); });
 
-  getEl('menu-contact')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (typeof PAGES !== 'undefined') {
-      const contactPage = PAGES.find((p) => p.id === 'contact');
-      if (contactPage) loadAndOpenPage(contactPage);
-    }
-  });
-
-  renderUI();
+  await loadSiteContent();
   checkInitialUrl();
 }
 
@@ -421,8 +557,8 @@ setInterval(updateClock, 5000);
 
 // 🎯 1. 監聽瀏覽器的「上一頁 / 下一頁」按鈕
 window.addEventListener('popstate', (event) => {
-  const pageId = event.state?.pageId;
-  if (pageId && typeof PAGES !== 'undefined') {
+  const pageId = event.state?.pageId || new URLSearchParams(window.location.search).get('page');
+  if (pageId && Array.isArray(PAGES)) {
     const targetPage = PAGES.find((p) => p.id === pageId);
     if (targetPage) loadAndOpenPage(targetPage, false);
   } else {
@@ -435,7 +571,7 @@ function checkInitialUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   const initialPageId = urlParams.get('page');
 
-  if (initialPageId && typeof PAGES !== 'undefined') {
+  if (initialPageId && Array.isArray(PAGES)) {
     const targetPage = PAGES.find((p) => p.id === initialPageId);
     if (targetPage) {
       history.replaceState({ pageId: initialPageId }, '', window.location.href);
