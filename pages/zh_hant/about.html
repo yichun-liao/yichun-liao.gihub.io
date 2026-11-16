@@ -1,88 +1,368 @@
 <!-- pages/zh_hant/about.html -->
-<h2 class="page-title">關於我 // 個人簡介</h2>
-<!-- Personal Header Card -->
-<div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-  <img src="/pictures/me.jpeg" alt="個人頭像" style="width: 110px; height: 110px; object-fit: cover; border: 2px solid #000; border-radius: 50%;">
+<style>
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .about-hero-card {
+    border: 3px solid #000;
+    background: #ffffff;
+    box-shadow: 5px 5px 0px #000;
+    padding: 18px 20px;
+  }
+
+  .about-card-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    font-family: 'VT323', monospace;
+    font-size: 1.15rem;
+  }
+
+  .about-status-badge {
+    background: #000;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .about-hero-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .about-avatar {
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0px #000;
+    background: #eae4d5;
+    flex-shrink: 0;
+  }
+
+  .about-identity {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .about-name {
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .about-role {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .about-tag {
+    font-size: 0.76rem;
+    font-weight: 600;
+    background: #f4f0e6;
+    border: 1px solid #000;
+    padding: 2px 8px;
+    color: #000;
+  }
+
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 2px dashed #000;
+  }
+
+  .about-btn {
+    background: #ffffff;
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0px #000;
+    padding: 4px 12px;
+    font-family: 'VT323', monospace;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.1s ease;
+  }
+
+  .about-btn:hover {
+    background: #000;
+    color: #fff;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  .about-btn.primary {
+    background: #000;
+    color: #fff;
+  }
+
+  .about-btn.primary:hover {
+    background: #333;
+  }
+
+  .about-section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 4px;
+    letter-spacing: 0.4px;
+  }
+
+  .about-bio-text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #222;
+    margin: 0;
+  }
+
+  .about-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .about-bento-card {
+    border: 2px solid #000;
+    background: #fafafa;
+    box-shadow: 3px 3px 0px #000;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .about-bento-index {
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: #555;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+  }
+
+  .about-bento-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .about-bento-desc {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #333;
+    margin: 0;
+  }
+
+  .about-philosophy-box {
+    border: 2px solid #000;
+    background: #f4f0e6;
+    box-shadow: 4px 4px 0px #000;
+  }
+
+  .about-philosophy-header {
+    background: #000;
+    color: #fff;
+    padding: 6px 12px;
+    font-family: 'VT323', monospace;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+  }
+
+  .about-philosophy-body {
+    padding: 14px 16px;
+  }
+
+  .about-quote {
+    border-left: 4px solid #000;
+    padding: 6px 12px;
+    margin: 0 0 12px 0;
+    background: #ffffff;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+
+  .about-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .about-highlight-card {
+    border: 2px solid #000;
+    background: #fafafa;
+    box-shadow: 3px 3px 0px #000;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .about-bento-grid,
+    .about-highlight-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-hero-card {
+      padding: 14px;
+    }
+  }
+</style>
+
+<h2 class="page-title">關於我 // 系統個人檔案</h2>
+
+<div class="about-container page-body">
+
+  <!-- 1984 Mac ID Hero Card -->
+  <div class="about-hero-card">
+    <div class="about-card-topbar">
+      <span>BIO_VIEWER.APP // PROFILE_ID: CU-ECE</span>
+      <span class="about-status-badge">PHD RESEARCHER // ACTIVE</span>
+    </div>
+
+    <div class="about-hero-main">
+      <img src="/pictures/me.jpeg" alt="廖翊鈞 個人頭像" width="104" height="104" decoding="async" class="about-avatar">
+      <div class="about-identity">
+        <div class="about-name">廖翊鈞 <span style="font-weight: 400; font-size: 1rem; color: #555;">(Yi-Chun Liao)</span></div>
+        <span class="about-role">科羅拉多大學博爾德分校（CU Boulder）電機電腦工程（ECE）博士生</span>
+        <div class="about-tags">
+          <span class="about-tag">#安全性關鍵控制</span>
+          <span class="about-tag">#統計系統識別</span>
+          <span class="about-tag">#控制屏障函數 (CBF)</span>
+          <span class="about-tag">#控制器安全過濾器</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-actions">
+      <button class="about-btn primary" onclick="window.openPortfolioPage && window.openPortfolioPage('research')">學術研究 →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('projects')">專案作品 →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('cv')">個人履歷 →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('contact')">聯絡方式 →</button>
+      <a href="https://github.com/yichun-liao" target="_blank" rel="noopener" class="about-btn">GITHUB ↗</a>
+      <a href="https://linkedin.com/in/yichun-liao" target="_blank" rel="noopener" class="about-btn">LINKEDIN ↗</a>
+    </div>
+  </div>
+
+  <!-- 1. Executive Biography -->
   <div>
-    <strong style="font-size: 1.2rem; display: block;">YiChun Liao</strong>
-    <span style="font-size: 0.85rem; color: #444; font-weight: bold;">CU Boulder 電機電腦工程（ECE）博士生</span>
-    <p style="font-size: 0.9rem; margin-top: 6px; color: #333;">
-    系統識別 • 數據驅動安全性關鍵控制
-    </p>
-  </div>
-</div>
-<div class="page-body">
-  
-  <!-- 1. Executive Summary -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">個人簡歷</h3>
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      歡迎來到我的數位工作空間。我是美國科羅拉多大學博爾德分校（CU Boulder）電機電腦工程系（ECE）的博士生，主要研究領域為<strong>數據驅動之安全性關鍵控制（Data-Driven Safety-Critical Control）與統計系統識別（Statistical System Identification）</strong>。我的核心研究聚焦於數據驅動控制，並曾參與狀態估計與卡爾曼濾波（Kalman Filtering）相關專案。此外，我也對<strong>量化系統化交易（Quantitative Systematic Trading）</strong>抱有濃厚興趣，具備設計演算法價值投資策略與歷史回測框架的實務經驗。
+    <h3 class="about-section-title">01 // 個人簡介</h3>
+    <p class="about-bio-text">
+      歡迎來到我的數位工作空間。我是美國科羅拉多大學博爾德分校（CU Boulder）電機電腦工程系（ECE）的博士生，專注於<strong>數據驅動之安全性關鍵控制（Data-Driven Safety-Critical Control）</strong>與<strong>統計系統識別（Statistical System Identification）</strong>。我的博士研究核心為直接從經驗軌跡數據中合成控制屏障函數（CBFs）與最佳化安全過濾器，為不確定動態系統提供嚴謹的形式化安全保證，並結合最佳控制理論與閉迴路物理系統模擬進行驗證。
     </p>
   </div>
 
-  <!-- 2. Technical Focus & Specialization -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">專業技術與研究焦點</h3>
-    <p style="margin-bottom: 12px;">
-      我的主要核心技術強項與研究領域涵蓋以下專長主題：
-    </p>
-    <ul style="padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
-      <li><strong>系統識別與控制（System Identification & Control）：</strong>從經驗輸入輸出數據中建立系統數學模型，並應用最佳控制演算法進行系統控制。</li>
-      <li><strong>狀態估計與感測器融合（State Estimation & Sensor Fusion）：</strong>推導基於四元數（Quaternion）的系統模型與更新矩陣（雅可比矩陣 Jacobians），實現用於精準 IMU 姿態追蹤的擴展卡爾曼濾波器（EKF）。</li>
-      <li><strong>控制理論與動態模擬（Control Theory & Dynamic Simulation）：</strong>開發強健的回授控制迴路，並使用 MATLAB Simulink 與 Simscape 進行實體物理系統模擬。</li>
-      <li><strong>量化價值投資策略（Quantitative Value Investing Strategies）：</strong>基於財務基本面指標與多階段系統化獲利了結邏輯，設計系統化、基於規則的演算法篩選模型。</li>
-      <li><strong>回測與金融數據分析（Backtesting & Financial Data Analytics）：</strong>建構嚴謹的資料庫測試環境，驗證交易演算法在歷史極端情境下的強健效能。</li>
-    </ul>
-  </div>
-
- <!-- 3. Technical Approach -->
-<div style="margin-bottom: 24px;">
-  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">研究與技術方法</h3>
-  
-  <blockquote style="border-left: 4px solid #000; padding: 10px 14px; margin: 16px 0; background: #f4f0e6; font-style: italic;">
-    "數據提供模型，但分析結構提供安全保證。"
-  </blockquote>
-
-  <p style="margin-bottom: 12px; line-height: 1.7;">
-    真實世界的系統極少符合教科書的理想假設——感測器數據帶有雜訊，而金融時間序列則呈現重尾風險（Heavy Tail Risks）。
-  </p>
-  <p style="margin-bottom: 12px; line-height: 1.7;">
-    我的研究方法致力於結合統計學習與嚴謹的動態安全保證：推導狀態估計的解析更新矩陣、構建用於安全性的數據驅動控制屏障函數（Control Barrier Functions, CBFs），並在實際部署前對演算法進行極端情境（Edge Cases）的壓力測試。
-  </p>
-</div>
-
-  <!-- 4. Research & Projects -->
-<div style="margin-bottom: 24px;">
-  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">研究與專案</h3>
-  
-  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
-    
-    <!-- Primary Academic Research -->
-    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-        <strong style="font-size: 1.05rem;">數據驅動安全性與系統識別</strong>
-        <span style="font-size: 0.75rem; background: #000; color: #fff; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">ECE 博士研究</span>
+  <!-- 2. Core Technical Pillars (2x2 Bento Grid) -->
+  <div>
+    <h3 class="about-section-title">02 // 專業技術與研究焦點</h3>
+    <div class="about-bento-grid">
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 01 // SYSTEM ID</span>
+        <strong class="about-bento-title">統計系統識別</strong>
+        <p class="about-bento-desc">直接從經驗輸入輸出軌跡數據中建立系統狀態空間數學模型，並推導嚴謹的不確定性邊界。</p>
       </div>
-      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">安全性關鍵控制與控制器安全過濾器</span>
-      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
-        開發數據驅動控制屏障函數（CBFs）與安全過濾框架，以在線性系統中落實嚴謹的安全保證。結合統計系統識別與控制器合成技術，有效應對未建模系統。
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 02 // SAFETY CONTROL</span>
+        <strong class="about-bento-title">安全過濾器與 CBF 合成</strong>
+        <p class="about-bento-desc">設計數據驅動控制屏障函數（CBFs）與最佳化安全過濾器，在不確定動態環境下確保系統滿足安全不變性。</p>
+      </div>
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 03 // OPTIMIZATION</span>
+        <strong class="about-bento-title">最佳控制與強健合成</strong>
+        <p class="about-bento-desc">建構受約束之回授控制器與凸最佳化架構，在模型不確定性下同時兼顧系統安全與標稱控制效能。</p>
+      </div>
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 04 // SIMULATION</span>
+        <strong class="about-bento-title">控制理論與動態模擬</strong>
+        <p class="about-bento-desc">開發強健的閉迴路回授控制系統，並使用 MATLAB Simulink 與 Simscape 進行多領域實體物理系統驗證。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Technical Philosophy -->
+  <div class="about-philosophy-box">
+    <div class="about-philosophy-header">TECHNICAL_APPROACH.LOG // 核心方法論</div>
+    <div class="about-philosophy-body">
+      <blockquote class="about-quote">
+        「數據提供模型，但分析結構提供安全保證。」
+      </blockquote>
+      <p style="font-size: 0.95rem; line-height: 1.65; color: #222; margin: 0;">
+        真實世界的物理系統極少符合教科書的理想假設——量測數據帶有雜訊，實際動態亦常包含未建模的不確定性或外部干擾。我的研究方法致力於結合統計學習與嚴謹的控制理論：從有限數據刻畫不確定性邊界、構建數據驅動控制屏障函數（CBFs），並在實際部署前透過模擬對控制器進行極端情境的壓力測試。
       </p>
     </div>
-
-    <!-- Side Project -->
-    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-        <strong style="font-size: 1.05rem;">量化系統化交易</strong>
-        <span style="font-size: 0.75rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">個人專案</span>
-      </div>
-      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">演算法系統設計與基本面篩選</span>
-      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
-        設計基於規則的系統化價值投資機器人。探索基本面財務指標過濾器、多階段執行規則，以及自動化歷史回測邏輯。
-      </p>
-    </div>
-
   </div>
-</div>
+
+  <!-- 4. Featured Research & Projects -->
+  <div>
+    <h3 class="about-section-title">03 // 核心研究與專案方向</h3>
+    <div class="about-highlight-grid">
+
+      <div class="about-highlight-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;">
+            <strong style="font-size: 1.05rem;">數據驅動安全性與系統識別</strong>
+            <span style="font-size: 0.72rem; background: #000; color: #fff; padding: 2px 7px; font-weight: bold;">ECE 博士研究</span>
+          </div>
+          <span style="display: block; font-size: 0.84rem; color: #555; margin-bottom: 8px;">安全性關鍵控制與控制器安全過濾器</span>
+          <p style="font-size: 0.9rem; line-height: 1.55; color: #222; margin: 0;">
+            開發數據驅動控制屏障函數（CBFs）與安全過濾框架，結合統計系統識別與控制器合成技術，為未建模線性系統提供嚴謹安全保證。
+          </p>
+        </div>
+        <div>
+          <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('research')">探索研究 →</button>
+        </div>
+      </div>
+
+      <div class="about-highlight-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;">
+            <strong style="font-size: 1.05rem;">控制器合成與系統模擬</strong>
+            <span style="font-size: 0.72rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 7px; font-weight: bold;">控制系統</span>
+          </div>
+          <span style="display: block; font-size: 0.84rem; color: #555; margin-bottom: 8px;">最佳回授控制與 Simscape 系統建模</span>
+          <p style="font-size: 0.9rem; line-height: 1.55; color: #222; margin: 0;">
+            建構基於最佳化的安全過濾器與強健閉迴路控制器，並於 MATLAB Simulink 與 Simscape 多領域物理模擬環境中進行驗證。
+          </p>
+        </div>
+        <div>
+          <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('projects')">查看專案 →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </div>

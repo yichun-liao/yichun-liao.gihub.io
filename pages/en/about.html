@@ -1,88 +1,369 @@
-<!-- pages/about.html -->
-<h2 class="page-title">About Me // Personal Biography</h2>
-<!-- Personal Header Card -->
-<div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-  <img src="/pictures/me.jpeg" alt="Profile Picture" style="width: 110px; height: 110px; object-fit: cover; border: 2px solid #000; border-radius: 50%;">
+<!-- pages/en/about.html -->
+<style>
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .about-hero-card {
+    border: 3px solid #000;
+    background: #ffffff;
+    box-shadow: 5px 5px 0px #000;
+    padding: 18px 20px;
+  }
+
+  .about-card-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    font-family: 'VT323', monospace;
+    font-size: 1.15rem;
+  }
+
+  .about-status-badge {
+    background: #000;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .about-hero-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .about-avatar {
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0px #000;
+    background: #eae4d5;
+    flex-shrink: 0;
+  }
+
+  .about-identity {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .about-name {
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .about-role {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .about-tag {
+    font-size: 0.76rem;
+    font-weight: 600;
+    background: #f4f0e6;
+    border: 1px solid #000;
+    padding: 2px 8px;
+    color: #000;
+  }
+
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 2px dashed #000;
+  }
+
+  .about-btn {
+    background: #ffffff;
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0px #000;
+    padding: 4px 12px;
+    font-family: 'VT323', monospace;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.1s ease;
+  }
+
+  .about-btn:hover {
+    background: #000;
+    color: #fff;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  .about-btn.primary {
+    background: #000;
+    color: #fff;
+  }
+
+  .about-btn.primary:hover {
+    background: #333;
+  }
+
+  .about-section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .about-bio-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #222;
+    margin: 0;
+  }
+
+  .about-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .about-bento-card {
+    border: 2px solid #000;
+    background: #fafafa;
+    box-shadow: 3px 3px 0px #000;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .about-bento-index {
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: #555;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+  }
+
+  .about-bento-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .about-bento-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+  }
+
+  .about-philosophy-box {
+    border: 2px solid #000;
+    background: #f4f0e6;
+    box-shadow: 4px 4px 0px #000;
+  }
+
+  .about-philosophy-header {
+    background: #000;
+    color: #fff;
+    padding: 6px 12px;
+    font-family: 'VT323', monospace;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+  }
+
+  .about-philosophy-body {
+    padding: 14px 16px;
+  }
+
+  .about-quote {
+    border-left: 4px solid #000;
+    padding: 6px 12px;
+    margin: 0 0 12px 0;
+    background: #ffffff;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+
+  .about-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .about-highlight-card {
+    border: 2px solid #000;
+    background: #fafafa;
+    box-shadow: 3px 3px 0px #000;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .about-bento-grid,
+    .about-highlight-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-hero-card {
+      padding: 14px;
+    }
+  }
+</style>
+
+<h2 class="page-title">About Me // System Profile</h2>
+
+<div class="about-container page-body">
+
+  <!-- 1984 Mac ID Hero Card -->
+  <div class="about-hero-card">
+    <div class="about-card-topbar">
+      <span>BIO_VIEWER.APP // PROFILE_ID: CU-ECE</span>
+      <span class="about-status-badge">PHD RESEARCHER // ACTIVE</span>
+    </div>
+
+    <div class="about-hero-main">
+      <img src="/pictures/me.jpeg" alt="Yi-Chun Liao Profile Picture" width="104" height="104" decoding="async" class="about-avatar">
+      <div class="about-identity">
+        <div class="about-name">Yi-Chun Liao <span style="font-weight: 400; font-size: 1rem; color: #555;">(廖翊鈞)</span></div>
+        <span class="about-role">ECE Ph.D. Student @ University of Colorado Boulder</span>
+        <div class="about-tags">
+          <span class="about-tag">#Safety-Critical Control</span>
+          <span class="about-tag">#Statistical System ID</span>
+          <span class="about-tag">#Control Barrier Functions</span>
+          <span class="about-tag">#Controller Safety Filters</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-actions">
+      <button class="about-btn primary" onclick="window.openPortfolioPage && window.openPortfolioPage('research')">RESEARCH →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('projects')">PROJECTS →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('cv')">CV / RESUME →</button>
+      <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('contact')">CONTACT →</button>
+      <a href="https://github.com/yichun-liao" target="_blank" rel="noopener" class="about-btn">GITHUB ↗</a>
+      <a href="https://linkedin.com/in/yichun-liao" target="_blank" rel="noopener" class="about-btn">LINKEDIN ↗</a>
+    </div>
+  </div>
+
+  <!-- 1. Executive Biography -->
   <div>
-    <strong style="font-size: 1.2rem; display: block;">YiChun Liao</strong>
-    <span style="font-size: 0.85rem; color: #444; font-weight: bold;">ECE PhD Student @ CU Boulder</span>
-    <p style="font-size: 0.9rem; margin-top: 6px; color: #333;">
-    System Identification • Data-Driven Safety-Critical Control
-    </p>
-  </div>
-</div>
-<div class="page-body">
-  
-  <!-- 1. Executive Summary -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Executive Biography</h3>
-    <p style="margin-bottom: 12px; line-height: 1.7;">
-      Welcome to my digital workspace. I am an ECE PhD student at the University of Colorado Boulder interested in <strong>data-driven safety-critical control and statistical system identification</strong>. My primary research focuses on data-driven control, project worked on some about state estimation, Kalman filtering. I am also interested in <strong>quantitative systematic trading</strong> and have experience designing algorithmic value-investing strategies and backtesting frameworks. 
+    <h3 class="about-section-title">01 // Executive Biography</h3>
+    <p class="about-bio-text">
+      Welcome to my digital workspace. I am an Electrical, Computer &amp; Energy Engineering (ECE) Ph.D. student at the <strong>University of Colorado Boulder</strong>, specializing in <strong>data-driven safety-critical control</strong> and <strong>statistical system identification</strong>. My doctoral research centers on synthesizing Control Barrier Functions (CBFs) and optimization-based controller safety filters directly from empirical trajectory data to provide formal safety guarantees for uncertain dynamical systems—bridging statistical modeling, optimal control, and closed-loop physical simulation.
     </p>
   </div>
 
-  <!-- 2. Technical Focus & Specialization -->
-  <div style="margin-bottom: 24px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Technical Expertise & Research Focus</h3>
-    <p style="margin-bottom: 12px;">
-      My primary technical strengths and research domains encompass the following specialized areas:
-    </p>
-    <ul style="padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
-      <li><strong>System Identification & Control:</strong> Formulating mathematical system models from empirical input-output data, and applying optimal control algorithms to control the system.</li>
-      <li><strong>State Estimation & Sensor Fusion:</strong> Deriving quaternion-based system models and update matrices (Jacobians) to implement Extended Kalman Filters (EKF) for accurate IMU orientation tracking.</li>
-      <li><strong>Control Theory & Dynamic Simulation:</strong> Developing robust feedback control loops, and simulated physical systems with MATLAB Simulink & Simscape.</li>
-      <li><strong>Quantitative Value Investing Strategies:</strong> Designing systematic, rule-based algorithmic screening models based on fundamental financial metrics and multi-stage systematic profit-taking logic.</li>
-      <li><strong>Backtesting & Financial Data Analytics:</strong> Constructing rigorous testing environments leveraging databases to validate algorithmic robust performance across historical stress scenarios.</li>
-    </ul>
-  </div>
-
- <!-- 3. Technical Approach -->
-<div style="margin-bottom: 24px;">
-  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Technical Approach</h3>
-  
-  <blockquote style="border-left: 4px solid #000; padding: 10px 14px; margin: 16px 0; background: #f4f0e6; font-style: italic;">
-    "Data provides the model, but analytical structure provides the safety guarantees."
-  </blockquote>
-
-  <p style="margin-bottom: 12px; line-height: 1.7;">
-    Real-world systems rarely match textbook assumptions— sensor data carries noise, and financial time-series exhibit heavy tail risks. 
-  </p>
-  <p style="margin-bottom: 12px; line-height: 1.7;">
-    My approach focuses on bridging statistical learning with formal dynamic guarantees: deriving analytical update matrices for state estimation, constructing data-driven Control Barrier Functions (CBFs) for safety, and stress-testing algorithms against edge cases before implementation.
-  </p>
-</div>
-
-  <!-- 4. Research & Projects -->
-<div style="margin-bottom: 24px;">
-  <h3 style="font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 4px;">Research & Projects</h3>
-  
-  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
-    
-    <!-- Primary Academic Research -->
-    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-        <strong style="font-size: 1.05rem;">Data-Driven Safety & System Identification</strong>
-        <span style="font-size: 0.75rem; background: #000; color: #fff; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">ECE PhD Research</span>
+  <!-- 2. Core Technical Pillars (2x2 Bento Grid) -->
+  <div>
+    <h3 class="about-section-title">02 // Technical Expertise &amp; Focus</h3>
+    <div class="about-bento-grid">
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 01 // SYSTEM ID</span>
+        <strong class="about-bento-title">Statistical System Identification</strong>
+        <p class="about-bento-desc">Formulating mathematical state-space models and uncertainty bounds directly from empirical input-output trajectory data.</p>
       </div>
-      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">Safety-Critical Control & Controller Safety Filters</span>
-      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
-        Developing data-driven Control Barrier Functions (CBFs) and safety filtering frameworks to enforce formal safety guarantees in linear systems. Combining statistical system identification with controller synthesis to handle unmodeled systems.
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 02 // SAFETY CONTROL</span>
+        <strong class="about-bento-title">Safety Filters &amp; CBF Synthesis</strong>
+        <p class="about-bento-desc">Synthesizing data-driven Control Barrier Functions (CBFs) and optimization-based safety filters that enforce formal invariants.</p>
+      </div>
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 03 // OPTIMIZATION</span>
+        <strong class="about-bento-title">Optimal &amp; Robust Control</strong>
+        <p class="about-bento-desc">Designing constrained feedback controllers and convex optimization formulations that preserve nominal performance under model uncertainty.</p>
+      </div>
+
+      <div class="about-bento-card">
+        <span class="about-bento-index">MODULE 04 // SIMULATION</span>
+        <strong class="about-bento-title">Control Theory &amp; Physical Simulation</strong>
+        <p class="about-bento-desc">Validating robust closed-loop feedback architectures and multi-domain dynamical systems with MATLAB Simulink &amp; Simscape.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Technical Philosophy -->
+  <div class="about-philosophy-box">
+    <div class="about-philosophy-header">TECHNICAL_APPROACH.LOG // CORE THESIS</div>
+    <div class="about-philosophy-body">
+      <blockquote class="about-quote">
+        "Data provides the model, but analytical structure provides the safety guarantees."
+      </blockquote>
+      <p style="font-size: 0.95rem; line-height: 1.6; color: #222; margin: 0;">
+        Real-world physical systems rarely match idealized textbook assumptions—measurements carry noise, and dynamics often involve unmodeled uncertainties or external disturbances. My approach bridges statistical learning with formal control theory: characterizing uncertainty bounds from finite data, constructing data-driven Control Barrier Functions (CBFs) for invariance, and stress-testing controllers against edge cases in simulation before deployment.
       </p>
     </div>
-
-    <!-- Side Project -->
-    <div style="border: 2px solid #000; padding: 16px; background: #fafafa; box-shadow: 3px 3px 0px #000;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-        <strong style="font-size: 1.05rem;">Quantitative Systematic Trading</strong>
-        <span style="font-size: 0.75rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 8px; font-weight: bold; text-transform: uppercase;">Side Project</span>
-      </div>
-      <span style="display: block; font-size: 0.85rem; color: #444; margin-top: 4px;">Algorithmic System Design & Fundamental Screening</span>
-      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">
-        Designing rule-based systematic value-investing bots. Exploring fundamental financial metric filters, multi-stage execution rules, and automated historical backtesting logic.
-      </p>
-    </div>
-
   </div>
-</div>
+
+  <!-- 4. Featured Research & Projects -->
+  <div>
+    <h3 class="about-section-title">03 // Featured Tracks</h3>
+    <div class="about-highlight-grid">
+
+      <div class="about-highlight-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;">
+            <strong style="font-size: 1.05rem;">Data-Driven Safety &amp; System ID</strong>
+            <span style="font-size: 0.72rem; background: #000; color: #fff; padding: 2px 7px; font-weight: bold;">ECE PHD</span>
+          </div>
+          <span style="display: block; font-size: 0.84rem; color: #555; margin-bottom: 8px;">Safety-Critical Control &amp; Safety Filters</span>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #222; margin: 0;">
+            Developing data-driven Control Barrier Functions (CBFs) and safety filtering frameworks to enforce formal safety guarantees for unmodeled linear systems.
+          </p>
+        </div>
+        <div>
+          <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('research')">EXPLORE RESEARCH →</button>
+        </div>
+      </div>
+
+      <div class="about-highlight-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;">
+            <strong style="font-size: 1.05rem;">Controller Synthesis &amp; Simulation</strong>
+            <span style="font-size: 0.72rem; border: 1px solid #000; background: #fff; color: #000; padding: 2px 7px; font-weight: bold;">CONTROL SYSTEMS</span>
+          </div>
+          <span style="display: block; font-size: 0.84rem; color: #555; margin-bottom: 8px;">Optimal Feedback &amp; Simscape Modeling</span>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #222; margin: 0;">
+            Formulating optimization-based safety filters and robust closed-loop feedback controllers validated across multi-domain physical simulations in MATLAB Simulink.
+          </p>
+        </div>
+        <div>
+          <button class="about-btn" onclick="window.openPortfolioPage && window.openPortfolioPage('projects')">VIEW PROJECTS →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </div>
