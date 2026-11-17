@@ -33,6 +33,17 @@
           "zh_hant": "聯絡我",
           "zh_hans": "联系我"
         }
+      },
+      {
+        "id": "menu_mwk6ut6z_5rae1",
+        "action": "page",
+        "pageId": "daily",
+        "bold": false,
+        "labels": {
+          "en": "Lifestyle",
+          "zh_hant": "生活",
+          "zh_hans": "生活"
+        }
       }
     ],
     "defaultCenterTabId": "about"
@@ -62,7 +73,7 @@
             "statusBadge": "PHD RESEARCHER // ACTIVE",
             "avatar": "/pictures/me.jpeg",
             "name": "Yi-Chun Liao",
-            "nameNote": "(廖翊鈞)",
+            "nameNote": "",
             "role": "ECE Ph.D. Student @ University of Colorado Boulder",
             "tags": [
               "#Safety-Critical Control",
@@ -73,7 +84,7 @@
             "actions": [
               {
                 "label": "RESEARCH →",
-                "style": "primary",
+                "style": "default",
                 "actionType": "page",
                 "target": "research"
               },
@@ -114,7 +125,7 @@
             "type": "rich_text",
             "heading": "01 // Executive Biography",
             "paragraphs": [
-              "Welcome to my digital workspace. I am an Electrical, Computer & Energy Engineering (ECE) Ph.D. student at the **University of Colorado Boulder**, specializing in **data-driven safety-critical control** and **statistical system identification**. My doctoral research centers on synthesizing Control Barrier Functions (CBFs) and optimization-based controller safety filters directly from empirical trajectory data to provide formal safety guarantees for uncertain dynamical systems—bridging statistical modeling, optimal control, and closed-loop physical simulation."
+              "Welcome to my digital workspace. I am an Electrical, Computer & Energy Engineering (ECE) Ph.D. student at the **University of Colorado Boulder**, specializing in **data-driven safety-critical control** and **statistical system identification**. My doctoral research centers on synthesizing Control Barrier Functions (CBFs) and optimization-based controller safety filters directly from trajectory data to provide formal safety guarantees for uncertain dynamical systems."
             ]
           },
           {
@@ -126,31 +137,14 @@
               {
                 "indexLabel": "MODULE 01 // SYSTEM ID",
                 "title": "Statistical System Identification",
-                "description": "Formulating mathematical state-space models and uncertainty bounds directly from empirical input-output trajectory data."
+                "description": "Formulating mathematical state-space models and uncertainty bounds directly from input-output trajectory data."
               },
               {
                 "indexLabel": "MODULE 02 // SAFETY CONTROL",
-                "title": "Safety Filters & CBF Synthesis",
-                "description": "Synthesizing data-driven Control Barrier Functions (CBFs) and optimization-based safety filters that enforce formal invariants."
-              },
-              {
-                "indexLabel": "MODULE 03 // OPTIMIZATION",
-                "title": "Optimal & Robust Control",
-                "description": "Designing constrained feedback controllers and convex optimization formulations that preserve nominal performance under model uncertainty."
-              },
-              {
-                "indexLabel": "MODULE 04 // SIMULATION",
-                "title": "Control Theory & Physical Simulation",
-                "description": "Validating robust closed-loop feedback architectures and multi-domain dynamical systems with MATLAB Simulink & Simscape."
+                "title": "Safety Filters - CBF & CG",
+                "description": "Synthesizing data-driven Command Governor (CG) and Control Barrier Functions (CBFs) that enforce formal invariants."
               }
             ]
-          },
-          {
-            "id": "blk_about_quote_en",
-            "type": "quote_log",
-            "headerBar": "TECHNICAL_APPROACH.LOG // CORE THESIS",
-            "quote": "\"Data provides the model, but analytical structure provides the safety guarantees.\"",
-            "body": "Real-world physical systems rarely match idealized textbook assumptions—measurements carry noise, and dynamics often involve unmodeled uncertainties or external disturbances. My approach bridges statistical learning with formal control theory: characterizing uncertainty bounds from finite data, constructing data-driven Control Barrier Functions (CBFs) for invariance, and stress-testing controllers against edge cases in simulation before deployment."
           },
           {
             "id": "blk_about_tracks_en",
@@ -191,7 +185,7 @@
             "statusBadge": "PHD RESEARCHER // ACTIVE",
             "avatar": "/pictures/me.jpeg",
             "name": "廖翊鈞",
-            "nameNote": "(Yi-Chun Liao)",
+            "nameNote": "",
             "role": "科羅拉多大學博爾德分校（CU Boulder）電機電腦工程（ECE）博士生",
             "tags": [
               "#安全性關鍵控制",
@@ -202,7 +196,7 @@
             "actions": [
               {
                 "label": "學術研究 →",
-                "style": "primary",
+                "style": "default",
                 "actionType": "page",
                 "target": "research"
               },
@@ -243,7 +237,7 @@
             "type": "rich_text",
             "heading": "01 // 個人簡介",
             "paragraphs": [
-              "歡迎來到我的數位工作空間。我是美國科羅拉多大學博爾德分校（CU Boulder）電機電腦工程系（ECE）的博士生，專注於**數據驅動之安全性關鍵控制（Data-Driven Safety-Critical Control）**與**統計系統識別（Statistical System Identification）**。我的博士研究核心為直接從經驗軌跡數據中合成控制屏障函數（CBFs）與最佳化安全過濾器，為不確定動態系統提供嚴謹的形式化安全保證，並結合最佳控制理論與閉迴路物理系統模擬進行驗證。"
+              "歡迎來到我的數位工作空間。我是美國科羅拉多大學博爾德分校（CU Boulder）電機電腦工程系（ECE）的博士生，專注於**數據驅動之安全性關鍵控制（Data-Driven Safety-Critical Control）**與**統計系統識別（Statistical System Identification）**。我的博士研究核心為直接從軌跡數據中合成控制屏障函數（CBFs）與最佳化安全過濾器，為不確定動態系統提供嚴謹的形式化安全保證。"
             ]
           },
           {
@@ -255,31 +249,14 @@
               {
                 "indexLabel": "MODULE 01 // SYSTEM ID",
                 "title": "統計系統識別",
-                "description": "直接從經驗輸入輸出軌跡數據中建立系統狀態空間數學模型，並推導嚴謹的不確定性邊界。"
+                "description": "直接從輸入輸出軌跡數據中建立系統狀態空間數學模型，並推導嚴謹的不確定性邊界。"
               },
               {
                 "indexLabel": "MODULE 02 // SAFETY CONTROL",
-                "title": "安全過濾器與 CBF 合成",
-                "description": "設計數據驅動控制屏障函數（CBFs）與最佳化安全過濾器，在不確定動態環境下確保系統滿足安全不變性。"
-              },
-              {
-                "indexLabel": "MODULE 03 // OPTIMIZATION",
-                "title": "最佳控制與強健合成",
-                "description": "建構受約束之回授控制器與凸最佳化架構，在模型不確定性下同時兼顧系統安全與標稱控制效能。"
-              },
-              {
-                "indexLabel": "MODULE 04 // SIMULATION",
-                "title": "控制理論與動態模擬",
-                "description": "開發強健的閉迴路回授控制系統，並使用 MATLAB Simulink 與 Simscape 進行多領域實體物理系統驗證。"
+                "title": "安全過濾器 - CBF & CG",
+                "description": "合成數據驅動指令調控器（CG）與控制屏障函數（CBFs），以確保系統滿足形式化安全不變性。"
               }
             ]
-          },
-          {
-            "id": "blk_about_quote_zh_hant",
-            "type": "quote_log",
-            "headerBar": "TECHNICAL_APPROACH.LOG // 核心方法論",
-            "quote": "「數據提供模型，但分析結構提供安全保證。」",
-            "body": "真實世界的物理系統極少符合教科書的理想假設——量測數據帶有雜訊，實際動態亦常包含未建模的不確定性或外部干擾。我的研究方法致力於結合統計學習與嚴謹的控制理論：從有限數據刻畫不確定性邊界、構建數據驅動控制屏障函數（CBFs），並在實際部署前透過模擬對控制器進行極端情境的壓力測試。"
           },
           {
             "id": "blk_about_tracks_zh_hant",
@@ -320,7 +297,7 @@
             "statusBadge": "PHD RESEARCHER // ACTIVE",
             "avatar": "/pictures/me.jpeg",
             "name": "廖翊钧",
-            "nameNote": "(Yi-Chun Liao)",
+            "nameNote": "",
             "role": "科罗拉多大学博尔德分校（CU Boulder）电气计算机工程（ECE）博士生",
             "tags": [
               "#安全性关键控制",
@@ -331,7 +308,7 @@
             "actions": [
               {
                 "label": "学术研究 →",
-                "style": "primary",
+                "style": "default",
                 "actionType": "page",
                 "target": "research"
               },
@@ -372,7 +349,7 @@
             "type": "rich_text",
             "heading": "01 // 个人简介",
             "paragraphs": [
-              "欢迎来到我的数字工作空间。我是美国科罗拉多大学博尔德分校（CU Boulder）电气计算机工程系（ECE）的博士生，专注于**数据驱动之安全性关键控制（Data-Driven Safety-Critical Control）**与**统计系统识别（Statistical System Identification）**。我的博士研究核心为直接从经验轨迹数据中合成控制屏障函数（CBFs）与优化安全过滤器，为不确定动态系统提供严谨的形式化安全保证，并结合最优控制理论与闭环物理系统仿真进行验证。"
+              "欢迎来到我的数字工作空间。我是美国科罗拉多大学博尔德分校（CU Boulder）电气计算机工程系（ECE）的博士生，专注于**数据驱动之安全性关键控制（Data-Driven Safety-Critical Control）**与**统计系统识别（Statistical System Identification）**。我的博士研究核心为直接从轨迹数据中合成控制屏障函数（CBFs）与优化安全过滤器，为不确定动态系统提供严谨的形式化安全保证。"
             ]
           },
           {
@@ -384,31 +361,14 @@
               {
                 "indexLabel": "MODULE 01 // SYSTEM ID",
                 "title": "统计系统识别",
-                "description": "直接从经验输入输出轨迹数据中建立系统状态空间数学模型，并推导严谨的不确定性边界。"
+                "description": "直接从输入输出轨迹数据中建立系统状态空间数学模型，并推导严谨的不确定性边界。"
               },
               {
                 "indexLabel": "MODULE 02 // SAFETY CONTROL",
-                "title": "安全过滤器与 CBF 合成",
-                "description": "设计数据驱动控制屏障函数（CBFs）与优化安全过滤器，在不确定动态环境下确保系统满足安全不变性。"
-              },
-              {
-                "indexLabel": "MODULE 03 // OPTIMIZATION",
-                "title": "最优控制与强健合成",
-                "description": "构建受约束的反馈控制器与凸优化架构，在模型不确定性下同时兼顾系统安全与标称控制性能。"
-              },
-              {
-                "indexLabel": "MODULE 04 // SIMULATION",
-                "title": "控制理论与动态仿真",
-                "description": "开发强健的闭环反馈控制系统，并使用 MATLAB Simulink 与 Simscape 进行多领域物理系统验证。"
+                "title": "安全过滤器 - CBF & CG",
+                "description": "合成数据驱动指令调控器（CG）与控制屏障函数（CBFs），以确保系统满足形式化安全不变性。"
               }
             ]
-          },
-          {
-            "id": "blk_about_quote_zh_hans",
-            "type": "quote_log",
-            "headerBar": "TECHNICAL_APPROACH.LOG // 核心方法论",
-            "quote": "“数据提供模型，但分析结构提供安全保证。”",
-            "body": "真实世界的物理系统极少符合教科书的理想假设——测量数据带有噪声，实际动态亦常包含未建模的不确定性或外部干扰。我的研究方法致力于结合统计学习与严谨的控制理论：从有限数据刻画不确定性边界、构建数据驱动控制屏障函数（CBFs），并在实际部署前通过仿真对控制器进行极端情景的压力测试。"
           },
           {
             "id": "blk_about_tracks_zh_hans",
@@ -832,6 +792,75 @@
             "timezone": "北美山地时区 (UTC-7 / MST)",
             "noteHeading": "合作与交流主题",
             "noteBody": "欢迎随时交流系统识别算法、量化价值交易策略以及学术研究合作提案。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "daily",
+      "icon": "bolt",
+      "isCenter": false,
+      "showInDesktop": true,
+      "labels": {
+        "en": "Daily & Recharge",
+        "zh_hant": "日常 & 充電",
+        "zh_hans": "日常 & 充电"
+      },
+      "pageTitle": {
+        "en": "Daily & Recharge // Portfolio",
+        "zh_hant": "日常 & 充電 // 個人檔案",
+        "zh_hans": "日常 & 充电 // 个人档案"
+      },
+      "blocks": {
+        "en": [
+          {
+            "id": "blk_daily_status_notice_mwk6wkbi_s7jhd",
+            "type": "status_notice",
+            "topBadge": "STATUS // IN PROGRESS",
+            "title": "Daily & Recharge",
+            "body": "This section will share my daily life and favorite place to go.",
+            "innerLabel": "SYSTEM NOTE",
+            "innerText": "Pictures and review will be available here.",
+            "innerIcon": "pen",
+            "buttonText": "COMING SOON",
+            "buttonLocked": true,
+            "buttonTooltip": "Under construction",
+            "buttonActionType": "none",
+            "buttonTarget": ""
+          }
+        ],
+        "zh_hant": [
+          {
+            "id": "blk_daily_status_notice_zh_hant",
+            "type": "status_notice",
+            "topBadge": "STATUS // 內容建置中",
+            "title": "日常 & 充電",
+            "body": "本專區將分享我的日常生活點滴與最喜歡造訪的地方。",
+            "innerLabel": "SYSTEM NOTE",
+            "innerText": "照片與心得評論即將上線。",
+            "innerIcon": "pen",
+            "buttonText": "即將開放 (COMING SOON)",
+            "buttonLocked": true,
+            "buttonTooltip": "內容建置中",
+            "buttonActionType": "none",
+            "buttonTarget": ""
+          }
+        ],
+        "zh_hans": [
+          {
+            "id": "blk_daily_status_notice_zh_hans",
+            "type": "status_notice",
+            "topBadge": "STATUS // 内容建设中",
+            "title": "日常 & 充电",
+            "body": "本专区将分享我的日常生活点滴与最喜欢造访的地方。",
+            "innerLabel": "SYSTEM NOTE",
+            "innerText": "照片与心得评论即将上线。",
+            "innerIcon": "pen",
+            "buttonText": "即将开放 (COMING SOON)",
+            "buttonLocked": true,
+            "buttonTooltip": "内容建设中",
+            "buttonActionType": "none",
+            "buttonTarget": ""
           }
         ]
       }
